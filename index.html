@@ -1629,6 +1629,58 @@
         display: none !important
       }
     }
+  
+    /* ===== mobile safety: never allow sideways scrolling ===== */
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden
+    }
+
+    @supports (overflow: clip) {
+      html,
+      body {
+        overflow-x: clip
+      }
+    }
+
+    @media(max-width:600px) {
+      .badges {
+        gap: 6px;
+        padding-inline: 0
+      }
+
+      .badge {
+        height: 46px;
+        min-width: 46px;
+        padding: 0 4px
+      }
+
+      .badge .ic {
+        width: 34px;
+        height: 34px;
+        font-size: 24px
+      }
+
+      .badge.open {
+        padding: 0 14px 0 4px
+      }
+
+      .badge.open .ic {
+        transform: scale(1.2);
+        margin-left: -10px;
+        margin-right: 6px
+      }
+
+      .badge .lb {
+        font-size: 12.5px
+      }
+
+      .brands {
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)
+      }
+    }
   </style>
 </head>
 
@@ -1691,9 +1743,8 @@
     </div>
 
     <div class="badges rv" id="badges">
-      <button class="badge t-coral"><span class="ic">🗺️</span><span class="lbwrap"><span class="lb">Bengaluru,
-            Karnataka (India)</span></span></button>
-      <button class="badge t-blue"><span class="ic">💻</span><span class="lbwrap"><span class="lb">CSE Undergraduate ·
+      <button class="badge t-coral"><span class="ic">🗺️</span><span class="lbwrap"><span class="lb">Bengaluru, India</span></span></button>
+      <button class="badge t-blue"><span class="ic">💻</span><span class="lbwrap"><span class="lb">CSE Undergrad ·
             VTU</span></span></button>
       <button class="badge t-violet"><span class="ic">🖥️</span><span class="lbwrap"><span class="lb">Product
             Designer</span></span></button>
