@@ -1,0 +1,2302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prachi Yadav — Product Designer</title>
+  <meta name="description" content="Prachi Yadav — product designer and CSE undergrad based in Bengaluru.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0A0D1E;
+      --bg-2: #0E1226;
+      --card: #FFFFFF;
+      --dark-card-a: #1E2233;
+      --dark-card-b: #13162A;
+      --line: rgba(255, 255, 255, .09);
+      --ink: #FFFFFF;
+      --muted: #9099B3;
+      --dim: #5C6484;
+      --blue: #2F6BFF;
+      --display: "Fredoka", system-ui, sans-serif;
+      --body: "Inter", system-ui, sans-serif;
+      --w: 820px;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --ease-soft: cubic-bezier(.6, .02, .24, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      cursor: pointer
+    }
+
+    ::selection {
+      background: var(--blue);
+      color: #fff
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 3px;
+      border-radius: 6px
+    }
+
+    /* ambient glows */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(120% 80% at 50% -10%, rgba(60, 40, 140, .18), transparent 60%)
+    }
+
+    /* slow-moving gradient blobs behind everything */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden
+    }
+
+    .aurora span {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .55;
+      will-change: transform
+    }
+
+    .aurora .a1 {
+      width: 52vw;
+      height: 52vw;
+      left: 48%;
+      top: -12%;
+      background: radial-gradient(circle at 40% 40%, #7C4DFF, rgba(124, 77, 255, 0) 70%);
+      animation: drift1 26s ease-in-out infinite alternate
+    }
+
+    .aurora .a2 {
+      width: 44vw;
+      height: 44vw;
+      left: -10%;
+      top: 30%;
+      background: radial-gradient(circle at 50% 50%, #2F6BFF, rgba(47, 107, 255, 0) 70%);
+      opacity: .32;
+      animation: drift2 32s ease-in-out infinite alternate
+    }
+
+    .aurora .a3 {
+      width: 40vw;
+      height: 40vw;
+      left: 55%;
+      top: 62%;
+      background: radial-gradient(circle at 50% 50%, #C04DFF, rgba(192, 77, 255, 0) 70%);
+      opacity: .28;
+      animation: drift3 38s ease-in-out infinite alternate
+    }
+
+    @keyframes drift1 {
+      0% { transform: translate(0, 0) scale(1) }
+      50% { transform: translate(-14vw, 10vh) scale(1.15) }
+      100% { transform: translate(-30vw, 4vh) scale(.95) }
+    }
+
+    @keyframes drift2 {
+      0% { transform: translate(0, 0) scale(1) }
+      50% { transform: translate(18vw, -12vh) scale(1.2) }
+      100% { transform: translate(34vw, 8vh) scale(1) }
+    }
+
+    @keyframes drift3 {
+      0% { transform: translate(0, 0) scale(1.1) }
+      50% { transform: translate(-22vw, -20vh) scale(.9) }
+      100% { transform: translate(-8vw, -42vh) scale(1.15) }
+    }
+
+    @media(max-width:700px) {
+      .aurora span {
+        filter: blur(60px)
+      }
+
+      .aurora .a1 {
+        width: 90vw;
+        height: 90vw
+      }
+
+      .aurora .a2,
+      .aurora .a3 {
+        width: 80vw;
+        height: 80vw
+      }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 2;
+      max-width: var(--w);
+      margin: 0 auto;
+      padding-inline: 24px
+    }
+
+    section {
+      position: relative;
+      z-index: 2
+    }
+
+    /* ============ NAV ============ */
+    .nav {
+      position: fixed;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(30, 32, 52, .55);
+      border: 1px solid rgba(255, 255, 255, .07);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 16px 50px -16px rgba(0, 0, 0, .9)
+    }
+
+    .nav a {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: #D7DBEA;
+      transition: .25s var(--ease)
+    }
+
+    .nav a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, .1)
+    }
+
+    /* nav tooltips */
+    .nav a {
+      position: relative
+    }
+
+    .nav a::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translate(-50%, -4px);
+      padding: 6px 11px;
+      border-radius: 8px;
+      background: rgba(18, 20, 38, .96);
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: #fff;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .8);
+      transition: opacity .2s ease, transform .2s ease
+    }
+
+    .nav a:hover::after,
+    .nav a:focus-visible::after {
+      opacity: 1;
+      transform: translate(-50%, 0)
+    }
+
+    .nav a.active {
+      color: #fff;
+      background: rgba(124, 77, 255, .28)
+    }
+
+    @media(hover:none) {
+      .nav a::after {
+        display: none
+      }
+    }
+
+
+    @media(max-width:560px) {
+      .nav {
+        gap: 2px;
+        padding: 6px
+      }
+
+      .nav a {
+        width: 40px;
+        height: 40px
+      }
+
+      .nav a svg {
+        width: 19px;
+        height: 19px
+      }
+    }
+
+    /* ============ HERO ============ */
+    .hero {
+      padding: 180px 0 0;
+      text-align: center
+    }
+
+    .hero-inner {
+      display: inline-block;
+      text-align: left;
+      max-width: 100%
+    }
+
+    .hey {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(19px, 3.2vw, 30px);
+      color: #8C93AD;
+      margin-bottom: 2px;
+      letter-spacing: .005em
+    }
+
+    .namerow {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 3vw, 34px)
+    }
+
+    .name {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(46px, 11vw, 112px);
+      line-height: 1.0;
+      letter-spacing: -.015em;
+      color: #fff
+    }
+
+    /* stadium-shaped portrait wrapper — holds both the clipped image and the unclipped badge */
+    .avatar-wrap {
+      flex-shrink: 0;
+      position: relative;
+      width: clamp(150px, 26vw, 336px);
+      height: clamp(96px, 15vw, 194px)
+    }
+
+    .avatar {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(150deg, #B9BDC6, #8D929E);
+      border: 1px solid rgba(255, 255, 255, .28);
+      box-shadow: 0 26px 60px -24px rgba(0, 0, 0, .95);
+      transition: transform .4s var(--ease), box-shadow .4s var(--ease)
+    }
+
+    .avatar img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 42% 55%;
+      filter: grayscale(1) contrast(1.04);
+      transition: filter .5s var(--ease)
+    }
+
+    .avatar:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 70px -24px rgba(0, 0, 0, .95)
+    }
+
+    .avatar:hover img {
+      filter: grayscale(0) contrast(1)
+    }
+
+    .linkedin-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 32px;
+      height: 32px;
+      z-index: 5;
+      border-radius: 50%;
+      background: #0A66C2;
+      display: grid;
+      place-items: center;
+      border: 2.5px solid var(--bg);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .55);
+      transition: transform .3s var(--ease), background .3s var(--ease)
+    }
+
+    .avatar-wrap:hover .linkedin-badge {
+      transform: scale(1.12);
+      background: #0077B5
+    }
+
+    .rolerow {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 2.4vw, 26px);
+      margin-top: 14px
+    }
+
+    .rolerow .rule {
+      flex: 1;
+      height: 1px;
+      min-width: 40px;
+      background: linear-gradient(90deg, #2F6BFF, rgba(255, 255, 255, .22))
+    }
+
+    .rolerow .rolet {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(18px, 3.4vw, 33px);
+      color: #A9AFC6;
+      white-space: nowrap
+    }
+
+    @media(max-width:600px) {
+      .hero {
+        padding: 140px 0 0
+      }
+
+      .namerow {
+        gap: 12px
+      }
+    }
+
+    /* cycling achievement badges */
+    .badges {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(8px, 1.4vw, 14px);
+      margin-top: clamp(56px, 9vw, 110px);
+      flex-wrap: nowrap;
+      max-width: 100%;
+      padding-inline: 6px;
+      /* the group is centred, so a widening badge nudges its neighbours —
+     easing the whole row keeps that nudge from reading as a jolt */
+      transition: gap .75s var(--ease-soft)
+    }
+
+    .badges>* {
+      transition: transform .4s var(--ease)
+    }
+
+    .badge {
+      position: relative;
+      flex-shrink: 0;
+      height: clamp(54px, 8vw, 68px);
+      min-width: clamp(54px, 8vw, 68px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .09);
+      border: 1px solid rgba(255, 255, 255, .14);
+      color: #fff;
+      cursor: pointer;
+      overflow: visible;
+      /* lets the icon break out of the pill */
+      transition: background .7s var(--ease-soft), border-color .7s var(--ease-soft),
+        padding .75s var(--ease-soft), box-shadow .7s var(--ease-soft),
+        transform .4s var(--ease)
+    }
+
+    .badge:hover {
+      transform: translateY(-4px)
+    }
+
+    .badge .ic {
+      flex-shrink: 0;
+      width: clamp(40px, 6vw, 52px);
+      height: clamp(40px, 6vw, 52px);
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      font-size: clamp(28px, 4.4vw, 38px);
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .65));
+      transition: transform .75s var(--ease-soft), margin .75s var(--ease-soft);
+      will-change: transform
+    }
+
+    /* grid 0fr -> 1fr animates width smoothly; max-width does not */
+    .lbwrap {
+      display: grid;
+      grid-template-columns: 0fr;
+      min-width: 0;
+      transition: grid-template-columns .75s var(--ease-soft)
+    }
+
+    .lb {
+      overflow: hidden;
+      min-width: 0;
+      white-space: nowrap;
+      font-size: clamp(13px, 1.8vw, 17.5px);
+      font-weight: 600;
+      letter-spacing: -.005em;
+      opacity: 0;
+      transition: opacity .45s var(--ease)
+    }
+
+    .badge.open {
+      padding: 0 clamp(18px, 2.6vw, 28px) 0 8px
+    }
+
+    .badge.open .lbwrap {
+      grid-template-columns: 1fr
+    }
+
+    .badge.open .lb {
+      opacity: 1;
+      transition-delay: .16s
+    }
+
+    .badge.open .ic {
+      transform: scale(1.3);
+      margin-left: clamp(-22px, -2.4vw, -14px);
+      margin-right: clamp(6px, 1.2vw, 12px)
+    }
+
+    /* each badge carries its own colour when it opens */
+    .badge.open.t-coral {
+      background: #F5504E;
+      border-color: #F5504E;
+      box-shadow: 0 18px 42px -16px rgba(245, 80, 78, .7)
+    }
+
+    .badge.open.t-blue {
+      background: #2F6BFF;
+      border-color: #2F6BFF;
+      box-shadow: 0 18px 42px -16px rgba(47, 107, 255, .7)
+    }
+
+    .badge.open.t-violet {
+      background: #7C4DFF;
+      border-color: #7C4DFF;
+      box-shadow: 0 18px 42px -16px rgba(124, 77, 255, .7)
+    }
+
+    .badge.open.t-mint {
+      background: #18B884;
+      border-color: #18B884;
+      box-shadow: 0 18px 42px -16px rgba(24, 184, 132, .7)
+    }
+
+    .badge.open.t-white {
+      background: #fff;
+      border-color: #fff;
+      color: #12162B;
+      box-shadow: 0 18px 42px -16px rgba(0, 0, 0, .85)
+    }
+
+    /* brands */
+    .brands {
+      margin-top: 64px;
+      text-align: center;
+      overflow: hidden;
+      width: 100%
+    }
+
+    .brands p {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 22px
+    }
+
+    .brandrow {
+      display: flex;
+      align-items: center;
+      gap: clamp(30px, 5vw, 56px);
+      width: max-content;
+      animation: marquee 25s linear infinite
+    }
+
+    .brandrow:hover {
+      animation-play-state: paused
+    }
+
+    .brandset {
+      display: flex;
+      align-items: center;
+      gap: clamp(30px, 5vw, 56px)
+    }
+
+    @keyframes marquee {
+      to {
+        transform: translateX(calc(-50% - (clamp(30px, 5vw, 56px) / 2)))
+      }
+    }
+
+    .brandset span {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(14px, 2.2vw, 19px);
+      color: #69718F;
+      letter-spacing: .02em;
+      transition: .3s var(--ease);
+      filter: grayscale(1)
+    }
+
+    .brandset span:hover {
+      color: #C7CEE2
+    }
+
+    /* ============ SECTION TITLES ============ */
+    .stitle {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(32px, 5.8vw, 52px);
+      line-height: 1.12;
+      text-align: center;
+      letter-spacing: -.02em
+    }
+
+    .stitle .t1 {
+      font-weight: 400;
+      color: #A9AFC6
+    }
+
+    .stitle .t2 {
+      font-weight: 600;
+      background: linear-gradient(100deg, #FFFFFF 0%, #E4DAFF 45%, #A98BFF 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent
+    }
+
+    /* ============ WORK (sticky stack) ============ */
+    #work {
+      padding: 130px 0 0
+    }
+
+    #work .stitle {
+      margin-bottom: 64px
+    }
+
+    .stack {
+      position: relative
+    }
+
+    .slot {
+      position: sticky;
+      top: 110px;
+      padding-bottom: 44px
+    }
+
+    .pcard {
+      display: block;
+      background: var(--card);
+      color: #0D1020;
+      border-radius: 22px;
+      padding: 12px 12px 22px;
+      box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .85);
+      transition: transform .5s var(--ease);
+      text-decoration: none
+    }
+
+    .pcard:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 3px;
+      border-radius: 22px
+    }
+
+    @media(hover: hover) and (pointer: fine) {
+      .pcard:hover {
+        transform: translateY(-4px)
+      }
+
+      .pcard:hover .pshot-img {
+        transform: scale(1.03)
+      }
+
+      .pcard:hover .rd svg {
+        transform: translate(3px, -3px)
+      }
+    }
+
+    .pshot {
+      height: 380px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      font-family: var(--body);
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, .28)
+    }
+
+    .pshot-img {
+      width: 100%;
+      height: 100%;
+      max-height: 88%;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      transition: transform .5s var(--ease);
+      pointer-events: none
+    }
+
+    .pshot-fallback {
+      position: relative;
+      z-index: 1
+    }
+
+    /* hover "Read case study" pill — appears over the image and follows the cursor */
+    .hover-cta {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 4;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      background: #fff;
+      color: #0D1020;
+      font-family: var(--body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      white-space: nowrap;
+      box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .55);
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(.6);
+      transition: opacity .3s var(--ease), transform .4s var(--ease), left .18s linear, top .18s linear
+    }
+
+    .hover-cta svg {
+      color: var(--blue)
+    }
+
+    .pshot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background: rgba(8, 10, 24, .18);
+      opacity: 0;
+      transition: opacity .4s var(--ease);
+      pointer-events: none
+    }
+
+    @media(hover: hover) and (pointer: fine) {
+      .pshot {
+        cursor: pointer
+      }
+
+      .pcard:hover .hover-cta {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1)
+      }
+
+      .pcard:hover .pshot::after {
+        opacity: 1
+      }
+    }
+
+    /* keyboard users see the pill too */
+    .pcard:focus-visible .hover-cta {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1)
+    }
+
+    @media(hover: none) {
+      .hover-cta {
+        display: none
+      }
+    }
+
+    .s1 {
+      background: radial-gradient(60% 60% at 50% 50%, rgba(124, 77, 255, .35) 0%, transparent 100%), linear-gradient(160deg, #1A1440 0%, #0B0A22 60%, #2A1A5E 100%);
+      color: rgba(255, 255, 255, .4)
+    }
+
+    .s2 {
+      background: linear-gradient(170deg, #E3E9FB, #C9D5F7)
+    }
+
+    .s-wc {
+      background: radial-gradient(70% 70% at 60% 40%, rgba(90, 140, 255, .45), transparent 70%), linear-gradient(160deg, #0B3BB8 0%, #0A1F66 100%);
+      color: rgba(255, 255, 255, .5)
+    }
+
+    .s3 {
+      background: linear-gradient(170deg, #EFE7FB, #D6C6F5)
+    }
+
+    .s-rw {
+      background: radial-gradient(70% 70% at 60% 40%, rgba(98, 103, 243, .55), transparent 70%), linear-gradient(160deg, #2D2A8C 0%, #0D1122 100%);
+      color: rgba(255, 255, 255, .5)
+    }
+
+    .s-pm {
+      background: radial-gradient(70% 70% at 55% 35%, rgba(255, 255, 255, .7), transparent 70%), linear-gradient(160deg, #EDE7FF 0%, #D9CCFA 100%);
+      color: rgba(75, 38, 151, .5)
+    }
+
+    .s-cse {
+      background: radial-gradient(70% 70% at 60% 40%, rgba(70, 120, 200, .45), transparent 70%), linear-gradient(160deg, #1A3A6B 0%, #05162E 100%);
+      color: rgba(255, 255, 255, .5)
+    }
+
+    .s4 {
+      background: linear-gradient(170deg, #FCE6EF, #F3C6DC)
+    }
+
+    .pcard h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 20px 4px 8px;
+      letter-spacing: -.01em
+    }
+
+    .pcard p {
+      font-size: 13.5px;
+      line-height: 1.62;
+      color: #535A72;
+      margin-inline: 4px;
+      max-width: 64ch
+    }
+
+    .pcard .rd {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin: 16px 4px 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue)
+    }
+
+    .pcard .rd svg {
+      transition: transform .35s var(--ease)
+    }
+
+    @media(max-width:640px) {
+      .pshot {
+        height: 210px
+      }
+
+      .slot {
+        top: 86px;
+        padding-bottom: 26px
+      }
+    }
+
+    /* ============ EXPERIENCE ============ */
+    #exp {
+      padding: 160px 0 0;
+      position: relative
+    }
+
+    .ghost {
+      position: absolute;
+      top: 118px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(64px, 15.5vw, 168px);
+      line-height: 1;
+      letter-spacing: -.035em;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 0;
+      color: transparent;
+      background:
+        linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .55) 50%, transparent 70%) 0 0 / 250% 100%,
+        linear-gradient(180deg, rgba(196, 178, 255, .42) 0%, rgba(124, 77, 255, .16) 55%, rgba(124, 77, 255, 0) 92%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, .06);
+      animation: ghostShine 7s ease-in-out infinite
+    }
+
+    @keyframes ghostShine {
+      0%, 25% { background-position: 120% 0, 0 0 }
+      75%, 100% { background-position: -120% 0, 0 0 }
+    }
+
+    .expgrid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      padding-top: clamp(40px, 7vw, 96px)
+    }
+
+    @media(max-width:720px) {
+      .expgrid {
+        grid-template-columns: 1fr;
+        gap: 14px
+      }
+    }
+
+    /* flip card (like the reference): dark front, white detail face on hover / tap */
+    .ecard {
+      position: relative;
+      perspective: 1400px;
+      cursor: pointer;
+      height: 270px;
+      outline: none;
+      transition: transform .5s var(--ease)
+    }
+
+    .ecard:hover {
+      transform: translateY(-4px);
+      z-index: 20
+    }
+
+    .ecard:focus-visible .eface {
+      box-shadow: 0 0 0 2px var(--blue)
+    }
+
+    .eflip {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .8s cubic-bezier(.6, .02, .24, 1);
+      will-change: transform
+    }
+
+    @media(hover:hover) {
+      .ecard:hover .eflip {
+        transform: rotateY(180deg)
+      }
+    }
+
+    .ecard.flip .eflip {
+      transform: rotateY(180deg)
+    }
+
+    .eface {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 22px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .efront {
+      justify-content: space-between;
+      background:
+        radial-gradient(120% 80% at 100% 0%, rgba(124, 77, 255, .16), transparent 60%),
+        linear-gradient(165deg, var(--dark-card-a), var(--dark-card-b));
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 50px -30px rgba(0, 0, 0, .9)
+    }
+
+    .eback {
+      transform: rotateY(180deg);
+      background: #fff;
+      color: #12162B;
+      gap: 14px;
+      box-shadow: 0 30px 70px -26px rgba(0, 0, 0, .95)
+    }
+
+    .xtop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px
+    }
+
+    .xicon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(124, 77, 255, .14);
+      border: 1px solid rgba(143, 123, 255, .22);
+      color: #B8A6FF
+    }
+
+    .xicon.i2 {
+      background: rgba(47, 107, 255, .14);
+      border-color: rgba(47, 107, 255, .25);
+      color: #8FB0FF
+    }
+
+    .xicon.i3 {
+      background: rgba(24, 184, 132, .12);
+      border-color: rgba(24, 184, 132, .25);
+      color: #6FDDB6
+    }
+
+    .xdate {
+      font-size: 12px;
+      font-weight: 500;
+      color: #C3CADD;
+      padding: 6px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid var(--line);
+      white-space: nowrap
+    }
+
+    .efront h4 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(21px, 2.6vw, 25px);
+      line-height: 1.15;
+      letter-spacing: -.01em;
+      color: #fff
+    }
+
+    .efront .rl {
+      margin-top: 4px;
+      font-size: 13.5px;
+      color: var(--muted)
+    }
+
+    .tapme {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      font-size: 11.5px;
+      color: var(--dim)
+    }
+
+    .t-touch {
+      display: none
+    }
+
+    @media(hover:none) {
+      .t-hover {
+        display: none
+      }
+
+      .t-touch {
+        display: inline
+      }
+    }
+
+    .ehead {
+      border-left: 3px solid #7C4DFF;
+      padding-left: 14px
+    }
+
+    .ehead h4 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(21px, 2.6vw, 24px);
+      line-height: 1.15;
+      color: #12162B
+    }
+
+    .ehead p {
+      font-size: 13.5px;
+      color: #4C5370;
+      margin-top: 2px
+    }
+
+    .edesc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #3D4358
+    }
+
+    @media(max-width:720px) {
+      .ecard {
+        height: 240px
+      }
+    }
+
+    .resume {
+      display: flex;
+      justify-content: center;
+      margin-top: 44px
+    }
+
+    .resume a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #D5DAE8;
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 3px;
+      transition: .3s var(--ease)
+    }
+
+    .resume a:hover {
+      color: #fff;
+      border-color: #fff
+    }
+
+    /* ============ PHYSICS TUBS ============ */
+    #skills {
+      padding: 150px 0 0
+    }
+
+    .tubshell {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: linear-gradient(165deg, #141830, #0D1024);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      overflow: hidden
+    }
+
+    @media(max-width:760px) {
+      .tubshell {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .tubcol {
+      padding: 26px 0 0;
+      position: relative
+    }
+
+    .tubcol+.tubcol {
+      border-left: 1px solid var(--line)
+    }
+
+    @media(max-width:760px) {
+      .tubcol+.tubcol {
+        border-left: 0;
+        border-top: 1px solid var(--line)
+      }
+    }
+
+    .tubcol h3 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 21px;
+      text-align: center
+    }
+
+    .tubcol .sub {
+      font-size: 11.5px;
+      color: var(--dim);
+      text-align: center;
+      margin-top: 5px
+    }
+
+    .tub {
+      position: relative;
+      height: 340px;
+      margin-top: 8px;
+      overflow: hidden;
+      touch-action: none;
+      cursor: grab
+    }
+
+    .tub:active {
+      cursor: grabbing
+    }
+
+    .chip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform;
+      pointer-events: none;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #12162B;
+      padding: 9px 15px;
+      border-radius: 999px
+    }
+
+    .k1 {
+      background: #BFE8CB
+    }
+
+    .k2 {
+      background: #CFC3F3
+    }
+
+    .k3 {
+      background: #F8D9AE
+    }
+
+    .k4 {
+      background: #F9EBA4
+    }
+
+    .k5 {
+      background: #BBD3F7
+    }
+
+    .k6 {
+      background: #F6C4D8
+    }
+
+    .chip.round {
+      width: 54px;
+      height: 54px;
+      flex-direction: column;
+      gap: 1px;
+      padding: 0;
+      border-radius: 50%;
+      background: #fff;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 15px;
+      color: #1A1E33;
+      box-shadow: 0 8px 18px -8px rgba(0, 0, 0, .7), inset 0 0 0 1px rgba(0, 0, 0, .04)
+    }
+
+    .chip.round.txt {
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: -.01em
+    }
+
+    .chip.round .cap {
+      font-family: var(--body);
+      font-size: 8.5px;
+      font-weight: 600;
+      line-height: 1;
+      color: #1A1E33
+    }
+
+    .chip.round.capped img {
+      width: 42%;
+      height: 42%
+    }
+
+    .chip.round img {
+      width: 54%;
+      height: 54%;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none
+    }
+
+    /* reduced-motion fallback */
+    .tub.static {
+      height: auto;
+      padding: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      touch-action: auto
+    }
+
+    .tub.static .chip {
+      position: static;
+      pointer-events: auto
+    }
+
+    /* ============ GALLERY — INFINITE 3D RING ============ */
+    #gallery {
+      padding: 150px 0 0;
+      text-align: center
+    }
+
+    #gallery .stitle {
+      margin-bottom: 10px
+    }
+
+    /* full-bleed: break out of the 820px column */
+    .ring-bleed {
+      position: relative;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-top: 30px;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent)
+    }
+
+    .ring {
+      position: relative;
+      height: 430px;
+      perspective: 1500px;
+      perspective-origin: 50% 50%;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y
+    }
+
+    .ring:active {
+      cursor: grabbing
+    }
+
+    .ring-stage {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+      will-change: transform
+    }
+
+    .rc {
+      position: absolute;
+      width: 260px;
+      height: 340px;
+      margin: -170px 0 0 -130px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .14);
+      box-shadow: 0 40px 80px -32px rgba(0, 0, 0, .95);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 20px;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 17px;
+      color: rgba(0, 0, 0, .55);
+      /* backface stays visible on purpose — far-side cards show mirrored */
+      backface-visibility: visible
+    }
+
+    .rc img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none
+    }
+
+    /* posters and screens keep their full artwork; logos get breathing room */
+    .rc.fit img {
+      object-fit: contain;
+      padding: 14px
+    }
+
+    .rc.logo img {
+      object-fit: contain;
+      padding: 34px
+    }
+
+    .rc.wide-art img {
+      padding: 0
+    }
+
+    .rc::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(118deg, rgba(255, 255, 255, .22), transparent 44%)
+    }
+
+    @media(max-width:760px) {
+      .ring {
+        height: 320px
+      }
+
+      .rc {
+        width: 190px;
+        height: 250px;
+        margin: -125px 0 0 -95px;
+        border-radius: 18px;
+        font-size: 14px
+      }
+
+      .rc.fit img {
+        padding: 10px
+      }
+
+      .rc.logo img {
+        padding: 24px
+      }
+
+      .rc.wide-art img {
+        padding: 0
+      }
+    }
+
+    .g1 {
+      background: linear-gradient(160deg, #DDEBFF, #A8C4F2)
+    }
+
+    .g2 {
+      background: linear-gradient(160deg, #FFE2BE, #F6A85C)
+    }
+
+    .g3 {
+      background: linear-gradient(160deg, #1B2A4A, #0E1730);
+      color: rgba(255, 255, 255, .66)
+    }
+
+    .g4 {
+      background: linear-gradient(160deg, #F6F1E4, #E0D5BC)
+    }
+
+    .g5 {
+      background: linear-gradient(160deg, #E9DEFB, #C0A9F0)
+    }
+
+    .g6 {
+      background: linear-gradient(160deg, #D9F2E4, #9ED3BB)
+    }
+
+    .g7 {
+      background: linear-gradient(160deg, #FFD9DE, #F2A0AF)
+    }
+
+    .g8 {
+      background: linear-gradient(160deg, #CFEAF7, #8CC4DE)
+    }
+
+    .viewmore {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 44px;
+      font-size: 14px;
+      color: #D5DAE8;
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 3px;
+      transition: .3s var(--ease)
+    }
+
+    .viewmore:hover {
+      color: #fff;
+      border-color: #fff
+    }
+
+    /* ============ FOOTER ============ */
+    .foot {
+      padding: 150px 0 60px;
+      text-align: center;
+      position: relative
+    }
+
+    .foot::before {
+      content: "";
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(90%, var(--w));
+      height: 1px;
+      background: var(--line)
+    }
+
+    .foot h2 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(28px, 5.2vw, 40px);
+      margin-bottom: 14px
+    }
+
+    .foot p {
+      font-size: 14.5px;
+      color: var(--muted);
+      max-width: 46ch;
+      margin: 0 auto 34px
+    }
+
+    .getin {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid var(--line);
+      font-size: 14.5px;
+      font-weight: 500;
+      transition: .35s var(--ease)
+    }
+
+    .getin:hover {
+      background: var(--blue);
+      border-color: var(--blue);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px -16px rgba(47, 107, 255, .8)
+    }
+
+    .resume-wrap {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center
+    }
+
+    .resume-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 26px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      transition: .3s var(--ease)
+    }
+
+    .resume-btn:hover {
+      color: #fff;
+      border-color: var(--blue);
+      background: rgba(255, 255, 255, .04);
+      transform: translateY(-2px)
+    }
+
+    .copy {
+      margin-top: 64px;
+      font-size: 12px;
+      color: var(--dim)
+    }
+
+    /* ============ FLOATING ICONS ============ */
+    .float {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 19px;
+      z-index: 1;
+      pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, .16);
+      animation: bob 7s ease-in-out infinite
+    }
+
+    .float::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(150deg, rgba(255, 255, 255, .30), transparent 46%)
+    }
+
+    .f-fg {
+      background: #1E1E1E;
+      color: #fff;
+      box-shadow: 0 16px 34px -12px rgba(0, 0, 0, .95)
+    }
+
+    .f-ps {
+      background: linear-gradient(150deg, #123C63, #001E36);
+      color: #31A8FF;
+      box-shadow: 0 16px 38px -12px rgba(49, 168, 255, .45)
+    }
+
+    .f-ai {
+      background: linear-gradient(150deg, #5A2A05, #2B0F00);
+      color: #FF9A00;
+      box-shadow: 0 16px 38px -12px rgba(255, 154, 0, .4)
+    }
+
+    .f-fr {
+      background: linear-gradient(150deg, #4D8BFF, #0055FF);
+      color: #fff;
+      box-shadow: 0 16px 38px -12px rgba(47, 107, 255, .6)
+    }
+
+    @keyframes bob {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-6deg)
+      }
+
+      50% {
+        transform: translateY(-14px) rotate(6deg)
+      }
+    }
+
+    @media(max-width:900px) {
+      .float {
+        display: none
+      }
+    }
+
+    /* reveal */
+    .rv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .8s var(--ease), transform .8s var(--ease)
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+
+      .rv {
+        opacity: 1;
+        transform: none
+      }
+
+      .slot {
+        position: static
+      }
+
+      .aurora span,
+      .ghost {
+        animation: none !important
+      }
+
+      .brandrow {
+        animation: none !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        width: 100% !important
+      }
+
+      .brandset {
+        flex-wrap: wrap !important;
+        justify-content: center !important
+      }
+
+      .brandset[aria-hidden="true"] {
+        display: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- animated background -->
+  <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#top" aria-label="Home" data-tip="Home"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />
+      </svg></a>
+    <a href="#work" aria-label="My Design Solutions" data-tip="My Design Solutions"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7h6l2 2h10v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
+      </svg></a>
+    <a href="#exp" aria-label="Experience" data-tip="Experience"><svg width="23" height="23" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="7" width="18" height="13" rx="2" />
+        <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" />
+      </svg></a>
+    <a href="assets/Prachi_Yadav_Resume.pdf" target="_blank" rel="noopener" aria-label="Resume" data-tip="Resume"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 3H7a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7z" />
+        <path d="M14 3v4h4" />
+      </svg></a>
+    <a href="mailto:y16prachi04@gmail.com" aria-label="Email" data-tip="y16prachi04@gmail.com"><svg width="23" height="23" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
+      </svg></a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero wrap" id="top">
+    <div class="hero-inner rv">
+      <p class="hey">Hey there, I am</p>
+      <div class="namerow">
+        <h1 class="name">Prachi<br>Yadav</h1>
+        <div class="avatar-wrap">
+          <a href="https://www.linkedin.com/in/prachi-yadav-212212313" target="_blank" rel="noopener noreferrer"
+            class="avatar" aria-label="Prachi Yadav — LinkedIn Profile">
+            <img src="2.jpeg" alt="Prachi Yadav">
+          </a>
+          <a href="https://www.linkedin.com/in/prachi-yadav-212212313" target="_blank" rel="noopener noreferrer"
+            class="linkedin-badge" aria-label="LinkedIn Profile">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="rolerow">
+        <span class="rule"></span>
+        <span class="rolet">Product Designer</span>
+      </div>
+    </div>
+
+    <div class="badges rv" id="badges">
+      <button class="badge t-coral"><span class="ic">🗺️</span><span class="lbwrap"><span class="lb">Bengaluru,
+            Karnataka (India)</span></span></button>
+      <button class="badge t-blue"><span class="ic">💻</span><span class="lbwrap"><span class="lb">CSE Undergraduate ·
+            VTU</span></span></button>
+      <button class="badge t-violet"><span class="ic">🖥️</span><span class="lbwrap"><span class="lb">Product
+            Designer</span></span></button>
+      <button class="badge t-mint"><span class="ic">🏆</span><span class="lbwrap"><span class="lb">UI/UX
+            Designer</span></span></button>
+    </div>
+
+    <div class="brands rv">
+      <p>Brands I've worked with</p>
+      <div class="brandrow">
+        <div class="brandset">
+          <span>EdNeuron</span><span>WaltCorp</span><span>RampWork</span><span>Kaliper</span><span>Mindrevel</span><span>Zidio
+            Development</span><span>Prepmedica</span><span>Certimap</span><span>cMap Technika</span><span>NextCal</span><span>Quikbites</span>
+        </div>
+        <div class="brandset" aria-hidden="true">
+          <span>EdNeuron</span><span>WaltCorp</span><span>RampWork</span><span>Kaliper</span><span>Mindrevel</span><span>Zidio
+            Development</span><span>Prepmedica</span><span>Certimap</span><span>cMap Technika</span><span>NextCal</span><span>Quikbites</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- WORK -->
+  <section id="work" class="wrap">
+    <h2 class="stitle rv"><span class="t1">Showcase of</span><br><span class="t2">My Design Solutions</span></h2>
+    <div class="stack">
+
+      <!-- EDNEURON COVER: replace assets/edneuron/edneuron-cover.webp to change the card image -->
+      <div class="slot">
+        <a class="pcard" href="edneuron.html">
+          <div class="pshot s1">
+            <img class="pshot-img" src="assets/edneuron/edneuron-cover.webp" alt="EdNeuron medical education platform shown on a desktop monitor" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="pshot-fallback" style="display:none;">Case study</span>
+            <span class="hover-cta" aria-hidden="true">Read case study <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11 11 3M11 3H5M11 3v6" /></svg></span>
+          </div>
+          <h3>EdNeuron — Medical Education Platform</h3>
+          <p>Designed a unified medical learning experience connecting clinical case studies, research, CME credits, and personalized learning journeys.</p>
+          <span class="rd">Read case study
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M3 11 11 3M11 3H5M11 3v6" />
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- WALTCORP COVER: drop your own image at assets/waltcorp/wc.png and it is used automatically;
+           until then the card falls back to assets/waltcorp/waltcorp-cover.webp -->
+      <div class="slot">
+        <a class="pcard" href="waltcorp.html">
+          <div class="pshot s-wc">
+            <img class="pshot-img" src="assets/waltcorp/wc.png" alt="WaltCorp website homepage and M2M Studio page"
+              onerror="if(!this.dataset.fb){this.dataset.fb=1;this.src='assets/waltcorp/waltcorp-cover.webp';}else{this.style.display='none';this.nextElementSibling.style.display='inline-block';}">
+            <span class="pshot-fallback" style="display:none;">Case study</span>
+            <span class="hover-cta" aria-hidden="true">View case study <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11 11 3M11 3H5M11 3v6" /></svg></span>
+          </div>
+          <h3>WaltCorp — B2B Digital Solutions</h3>
+          <p>Designed a modern digital experience for a technology and consulting company, simplifying complex services into a clear, scalable website.</p>
+          <span class="rd">View case study
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11 11 3M11 3H5M11 3v6" /></svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- RAMPWORK COVER: replace assets/rampwork/rampwork-cover.webp to change the card image -->
+      <div class="slot">
+        <a class="pcard" href="rampwork.html">
+          <div class="pshot s-rw">
+            <img class="pshot-img" src="assets/rampwork/rampwork-cover.webp" alt="RampWork landing page and developer profiles"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block';">
+            <span class="pshot-fallback" style="display:none;">Case study</span>
+            <span class="hover-cta" aria-hidden="true">View case study <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11 11 3M11 3H5M11 3v6" /></svg></span>
+          </div>
+          <h3>RampWork — Remote Talent Platform</h3>
+          <p>Redesigned a hiring experience that helps companies discover, evaluate, and hire remote tech talent with less friction.</p>
+          <span class="rd">View case study
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11 11 3M11 3H5M11 3v6" /></svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- PREPMEDICA COVER: replace assets/prepmedica/prepmedica-cover.webp to change the card image -->
+      <div class="slot">
+        <a class="pcard" href="prepmedica.html">
+          <div class="pshot s-pm">
+            <img class="pshot-img" src="assets/prepmedica/prepmedica-cover.webp" alt="PrepMedica homepage and course page"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block';">
+            <span class="pshot-fallback" style="display:none;">Case study</span>
+            <span class="hover-cta" aria-hidden="true">View case study <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11 11 3M11 3H5M11 3v6" /></svg></span>
+          </div>
+          <h3>PrepMedica — Medical Exam Prep Platform</h3>
+          <p>Designed a focused medical learning experience that helps students prepare, practice, track progress, and learn with confidence.</p>
+          <span class="rd">View case study
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11 11 3M11 3H5M11 3v6" /></svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- CSE COVER: replace assets/cse/cse-cover.webp to change the card image -->
+      <div class="slot">
+        <a class="pcard" href="cse-website.html">
+          <div class="pshot s-cse">
+            <img class="pshot-img" src="assets/cse/cse-cover.webp" alt="PESITM CSE department website homepage and about section"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block';">
+            <span class="pshot-fallback" style="display:none;">Case study</span>
+            <span class="hover-cta" aria-hidden="true">View case study <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11 11 3M11 3H5M11 3v6" /></svg></span>
+          </div>
+          <h3>PESITM CSE — Department Website</h3>
+          <p>Designed a department website that brings academics, results, events and announcements into one clear, easy-to-navigate experience.</p>
+          <span class="rd">View case study
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11 11 3M11 3H5M11 3v6" /></svg>
+          </span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="exp" class="wrap">
+    <div class="ghost" aria-hidden="true">EXPERIENCE</div>
+    <div class="float f-fg" style="top:60px;left:-70px;animation-delay:-1s">Fg</div>
+    <div class="float f-fr" style="top:340px;right:-70px;animation-delay:-3.5s">Fr</div>
+
+    <div class="expgrid">
+
+      <article class="ecard rv" tabindex="0" aria-label="WaltCorp — Product Design &amp; UI/UX, 2025 – Present. Designing digital products and user experiences, contributing to product strategy, website design, UX research and brand communication.">
+        <div class="eflip">
+          <div class="eface efront">
+            <div class="xtop">
+              <span class="xicon" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" /></svg></span>
+              <span class="xdate">2025 – Present</span>
+            </div>
+            <div>
+              <h4>WaltCorp</h4>
+              <p class="rl">Product Design &amp; UI/UX</p>
+              <p class="tapme"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5" />
+                </svg><span class="t-hover">Hover to know more</span><span class="t-touch">Tap to know more</span></p>
+            </div>
+          </div>
+          <div class="eface eback" aria-hidden="true">
+            <div class="ehead">
+              <h4>WaltCorp</h4>
+              <p>Product Design &amp; UI/UX · 2025 – Present</p>
+            </div>
+            <p class="edesc">Designing digital products and user experiences, contributing to product strategy, website design, UX research and brand communication.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="ecard rv" tabindex="0" aria-label="Zidio Development — UI/UX Design Intern, 2025. Worked on EdTech platform design, creating user interfaces and improving the learning experience through structured design solutions.">
+        <div class="eflip">
+          <div class="eface efront">
+            <div class="xtop">
+              <span class="xicon i2" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c3 2 9 2 12 0v-5" /></svg></span>
+              <span class="xdate">2025</span>
+            </div>
+            <div>
+              <h4>Zidio Development</h4>
+              <p class="rl">UI/UX Design Intern</p>
+              <p class="tapme"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5" />
+                </svg><span class="t-hover">Hover to know more</span><span class="t-touch">Tap to know more</span></p>
+            </div>
+          </div>
+          <div class="eface eback" aria-hidden="true">
+            <div class="ehead">
+              <h4>Zidio Development</h4>
+              <p>UI/UX Design Intern · 2025</p>
+            </div>
+            <p class="edesc">Worked on EdTech platform design, creating user interfaces and improving the learning experience through structured design solutions.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="ecard rv" tabindex="0" aria-label="Freelance &amp; Client Projects — UI/UX &amp; Visual Design, 2024 – Present. Created digital interfaces, brand visuals and design assets for client projects across different products and platforms.">
+        <div class="eflip">
+          <div class="eface efront">
+            <div class="xtop">
+              <span class="xicon i3" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z" /><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" /><path d="M2 2l7.6 7.6" /><circle cx="11" cy="11" r="2" /></svg></span>
+              <span class="xdate">2024 – Present</span>
+            </div>
+            <div>
+              <h4>Freelance &amp; Client Projects</h4>
+              <p class="rl">UI/UX &amp; Visual Design</p>
+              <p class="tapme"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5" />
+                </svg><span class="t-hover">Hover to know more</span><span class="t-touch">Tap to know more</span></p>
+            </div>
+          </div>
+          <div class="eface eback" aria-hidden="true">
+            <div class="ehead">
+              <h4>Freelance &amp; Client Projects</h4>
+              <p>UI/UX &amp; Visual Design · 2024 – Present</p>
+            </div>
+            <p class="edesc">Created digital interfaces, brand visuals and design assets for client projects across different products and platforms.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="resume rv">
+      <a href="assets/Prachi_Yadav_Resume.pdf" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 19h16" />
+        </svg>
+        View Resume
+      </a>
+    </div>
+  </section>
+
+  <!-- SKILLS TUBS -->
+  <section id="skills" class="wrap">
+    <div class="tubshell rv">
+      <div class="tubcol">
+        <h3>My Skillset</h3>
+        <p class="sub">Not a fan of the layout? Just drag the pills!</p>
+        <div class="tub" id="tub-skills"></div>
+      </div>
+      <div class="tubcol">
+        <h3>Tools, I Use</h3>
+        <p class="sub">Need a break? Drag, drop and remix the logos!</p>
+        <div class="tub" id="tub-tools"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="wrap">
+    <div class="float f-ps" style="top:150px;left:-72px;animation-delay:-2s">Ps</div>
+    <div class="float f-ai" style="top:230px;right:-72px;animation-delay:-4.5s">Ai</div>
+    <h2 class="stitle rv"><span class="t1">Few of my</span><br><span class="t2">Graphic Designs</span></h2>
+  </section>
+
+  <div class="ring-bleed">
+    <div class="ring" id="ring">
+      <div class="ring-stage" id="ring-stage">
+        <!-- GRAPHIC DESIGNS: card images are assets/graphics/card-*.webp (artwork on a blurred backdrop). Originals are the same names without "card-". -->
+        <div class="rc"><img src="assets/graphics/card-mclaren-gts-web.webp" alt="McLaren GTS web hero" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-mango-juice-poster.webp" alt="Mango juice poster" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-lotus-cup-mockup.webp" alt="Lotus logo on a paper cup" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-protection-app-splash.webp" alt="Protection app splash screen" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-zoo-family-fun-day.webp" alt="Family Fun Day at the Zoo poster" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-detox-juice-poster.webp" alt="Detox juice poster" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-nextcal-cup-mockup.webp" alt="NextCal logo on a coffee cup" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-dental-kiosk-display.webp" alt="Sushruta Dentalaya kiosk display" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-quikbites-pastries.webp" alt="Quikbites cakes and pastries poster" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-dental-id-card.webp" alt="Sushruta Dentalaya ID card" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-bottle-shop-banner.webp" alt="Personalised bottle shop banner" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-coffee-cake-poster.webp" alt="Pinnata coffee cake poster" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-lotus-logo.webp" alt="Lotus line logo" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-dental-banner.webp" alt="Sushruta Dentalaya banner" draggable="false"></div>
+        <div class="rc"><img src="assets/graphics/card-nextcal-logo.webp" alt="NextCal logo" draggable="false"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="wrap" style="text-align:center;padding-top:34px">
+    <a class="viewmore rv" href="#">View More
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M3 11 11 3M11 3H5M11 3v6" />
+      </svg>
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="foot wrap">
+    <h2 class="rv">Let's Collaborate Together</h2>
+    <p class="rv">Let's craft digital experiences that are not just beautiful - but meaningful
+      and genuinely useful for the people using them.</p>
+    <a class="getin rv" href="mailto:y16prachi04@gmail.com" target="_blank" onclick="var w = window.open('https://mail.google.com/mail/?view=cm&fs=1&to=y16prachi04@gmail.com', '_blank'); if(w){return false;}">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="m3 7 9 6 9-6" />
+      </svg>
+      Get in touch
+    </a>
+    <div class="resume-wrap rv">
+      <a href="assets/Prachi_Yadav_Resume.pdf" download class="resume-btn" aria-label="Download Resume">Download Resume</a>
+    </div>
+    <p class="copy">© 2026 Prachi Yadav · Designed &amp; built by me</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script>
+    /* reveal */
+    const io = new IntersectionObserver(es => {
+      es.forEach((e, i) => {
+        if (e.isIntersecting) { setTimeout(() => e.target.classList.add('in'), (i % 6) * 70); io.unobserve(e.target); }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+    /* ======= CYCLING HERO BADGES ======= */
+    (function () {
+      const wrap = document.getElementById('badges');
+      if (!wrap) return;
+      const list = [...wrap.children];
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      let i = 0, timer = null, resumeT = null, onScreen = false;
+
+      function show(n) {
+        const next = (n + list.length) % list.length;
+        if (next === i && list[i].classList.contains('open')) return;
+        i = next;
+        list.forEach((b, k) => b.classList.toggle('open', k === i));
+      }
+      function pause() { clearInterval(timer); timer = null; clearTimeout(resumeT); }
+      function play() {
+        if (reduced || timer || !onScreen) return;
+        timer = setInterval(() => show(i + 1), 3800);
+      }
+
+      /* Hover is handled on the container, not per badge.
+         An open badge grows and shifts its neighbours, so the element under the
+         cursor changes mid-animation — per-badge listeners fire again and the
+         badges flicker. Reading the badge from the event target and bailing out
+         when it is already open keeps it stable. */
+      if (canHover) {
+        wrap.addEventListener('pointerover', e => {
+          const b = e.target.closest('.badge');
+          if (!b || !wrap.contains(b)) return;
+          const k = list.indexOf(b);
+          if (k === -1 || k === i) return;
+          pause(); show(k);
+        });
+        wrap.addEventListener('pointerleave', () => {
+          pause();
+          resumeT = setTimeout(play, 700);   // small grace period, no snap-back
+        });
+      }
+
+      // tap works on touch, where there is no hover
+      list.forEach((b, k) => b.addEventListener('click', () => {
+        pause(); show(k); resumeT = setTimeout(play, 5000);
+      }));
+
+      show(0);
+      new IntersectionObserver(es => {
+        onScreen = es[0].isIntersecting;
+        onScreen ? play() : pause();
+      }, { threshold: .2 }).observe(wrap);
+    })();
+
+    /* ======= PHYSICS TUBS =======
+       Matter.js runs invisible bodies; real DOM chips are
+       synced to them every frame so text stays crisp.
+    ============================== */
+    const SKILLS = ['User Research', 'Design Systems', 'Prototyping', 'Visual Design',
+      'Interaction Design', 'User Journey', 'Wireframing', 'Usability Testing',
+      'Auto Layout', 'Motion', 'Front-end', 'Product Management', 'Business Analysis', 'User Story'];
+    /* tool logos — files live in assets/tools/. [file, name, caption]; no file = text chip */
+    const TOOL_LOGOS = {
+      Figma: ['figma', 'Figma'], Framer: ['framer', 'Framer'],
+      Canva: ['canva', 'Canva'], Photoshop: ['photoshop', 'Photoshop'],
+      Illustrator: ['illustrator', 'Illustrator'], AfterEffects: ['aftereffects', 'After Effects'],
+      Notion: ['notion', 'Notion'], WordPress: ['wordpress', 'WordPress'], HTML: ['html', 'HTML'],
+      CSS: ['css', 'CSS'], JavaScript: ['javascript', 'JavaScript'], React: ['react', 'React'],
+      GitHub: ['github', 'GitHub'], Docker: ['docker', 'Docker'], MySQL: ['mysql', 'MySQL'],
+      Java: ['java', 'Java'], C: ['c', 'C'], ChatGPT: ['chatgpt', 'ChatGPT'], Gemini: ['gemini', 'Gemini'],
+      Claude: ['claude', 'Claude']
+    };
+    const TOOLS = Object.keys(TOOL_LOGOS);
+    function fillChip(chip, label, shape) {
+      const logo = shape === 'round' && TOOL_LOGOS[label];
+      if (!logo) { chip.textContent = label; return; }
+      const [file, name, cap] = logo;
+      chip.title = name;
+      chip.setAttribute('aria-label', name);
+      if (!file) { chip.classList.add('txt'); chip.textContent = name; return; }
+      chip.innerHTML = `<img src="assets/tools/${file}.svg" alt="${name}" draggable="false">` +
+        (cap ? `<span class="cap">${cap}</span>` : '');
+      if (cap) chip.classList.add('capped');
+    }
+
+
+    function buildTub(el, items, shape) {
+      const M = Matter; let engine, runner, raf, chips = [];
+
+      function destroy() {
+        if (raf) cancelAnimationFrame(raf);
+        if (runner) M.Runner.stop(runner);
+        if (engine) { M.World.clear(engine.world); M.Engine.clear(engine); }
+        el.innerHTML = ''; chips = [];
+      }
+
+      function build() {
+        destroy();
+        const W = el.clientWidth, H = el.clientHeight;
+        if (!W || !H) return;
+
+        engine = M.Engine.create(); engine.gravity.y = 1;
+        const world = engine.world, T = 200;
+        M.World.add(world, [
+          M.Bodies.rectangle(W / 2, H + T / 2, W * 3, T, { isStatic: true }),
+          M.Bodies.rectangle(-T / 2, H / 2, T, H * 4, { isStatic: true }),
+          M.Bodies.rectangle(W + T / 2, H / 2, T, H * 4, { isStatic: true })
+        ]);
+
+        items.forEach((label, i) => {
+          const chip = document.createElement('div');
+          chip.className = 'chip ' + (shape === 'round' ? 'round' : 'k' + ((i % 6) + 1));
+          fillChip(chip, label, shape);
+          el.appendChild(chip);
+
+          const w = chip.offsetWidth, h = chip.offsetHeight;
+          const x = w / 2 + 10 + Math.random() * Math.max(W - w - 20, 10);
+          const y = -70 - Math.random() * 450;
+
+          const body = shape === 'round'
+            ? M.Bodies.circle(x, y, w / 2, { restitution: .5, friction: .14, frictionAir: .006 })
+            : M.Bodies.rectangle(x, y, w, h, {
+              restitution: .4, friction: .3, frictionAir: .008,
+              chamfer: { radius: h / 2 }
+            });
+
+          M.Body.setAngle(body, (Math.random() - .5) * 0.9);
+          M.World.add(world, body);
+          chips.push({ el: chip, body, w, h });
+        });
+
+        const mouse = M.Mouse.create(el);
+        M.World.add(world, M.MouseConstraint.create(engine, {
+          mouse, constraint: { stiffness: .18, render: { visible: false } }
+        }));
+        mouse.element.removeEventListener('wheel', mouse.mousewheel);
+        mouse.element.removeEventListener('DOMMouseScroll', mouse.mousewheel);
+
+        runner = M.Runner.create(); M.Runner.run(runner, engine);
+
+        (function sync() {
+          for (const c of chips) {
+            const { x, y } = c.body.position;
+            c.el.style.transform =
+              `translate(${x - c.w / 2}px, ${y - c.h / 2}px) rotate(${c.body.angle}rad)`;
+          }
+          raf = requestAnimationFrame(sync);
+        })();
+      }
+
+      function fallback() {
+        el.classList.add('static'); el.innerHTML = '';
+        items.forEach((label, i) => {
+          const chip = document.createElement('div');
+          chip.className = 'chip ' + (shape === 'round' ? 'round' : 'k' + ((i % 6) + 1));
+          fillChip(chip, label, shape); el.appendChild(chip);
+        });
+      }
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || typeof Matter === 'undefined') {
+        fallback(); return;
+      }
+
+      let started = false;
+      new IntersectionObserver((es, obs) => {
+        if (es[0].isIntersecting && !started) { started = true; build(); obs.disconnect(); }
+      }, { threshold: .3 }).observe(el);
+
+      let rt;
+      window.addEventListener('resize', () => {
+        if (!started) return; clearTimeout(rt); rt = setTimeout(build, 260);
+      });
+    }
+
+    window.addEventListener('load', () => {
+      buildTub(document.getElementById('tub-skills'), SKILLS, 'pill');
+      buildTub(document.getElementById('tub-tools'), TOOLS, 'round');
+    });
+
+    /* ======= EXPERIENCE FLIP CARDS ======= */
+    (function () {
+      const cards = [...document.querySelectorAll('.ecard')];
+      if (!cards.length) return;
+      const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      cards.forEach(c => {
+        // hover handles it on desktop; touch needs an explicit tap
+        if (!canHover) {
+          c.addEventListener('click', () => {
+            cards.forEach(o => { if (o !== c) o.classList.remove('flip'); });
+            c.classList.toggle('flip');
+          });
+        }
+        // keyboard: Enter or Space flips, Escape closes
+        c.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.classList.toggle('flip'); }
+          if (e.key === 'Escape') c.classList.remove('flip');
+        });
+        c.addEventListener('focus', () => { if (canHover) c.classList.add('flip'); });
+        c.addEventListener('blur', () => c.classList.remove('flip'));
+      });
+    })();
+
+    /* ======= SHOWCASE: hover pill follows cursor ======= */
+    (function () {
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      document.querySelectorAll('.pcard .pshot').forEach(shot => {
+        const pill = shot.querySelector('.hover-cta');
+        if (!pill) return;
+        shot.addEventListener('pointermove', e => {
+          const r = shot.getBoundingClientRect();
+          pill.style.left = (e.clientX - r.left) + 'px';
+          pill.style.top = (e.clientY - r.top) + 'px';
+        });
+        shot.addEventListener('pointerleave', () => {
+          pill.style.left = '50%'; pill.style.top = '50%';
+        });
+      });
+    })();
+
+    /* ======= INFINITE 3D RING ======= */
+    (function () {
+      const ring = document.getElementById('ring');
+      const stage = document.getElementById('ring-stage');
+      if (!ring || !stage) return;
+      const cards = [...stage.children];
+      const N = cards.length, STEP = 360 / N;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let radius, angle = 0, spin = 0.22, target = 0.22, drag = false, lastX = 0, vel = 0, raf;
+
+      function place() {
+        // radius derived from card width so gaps stay even at any card count
+        const narrow = window.innerWidth < 760;
+        const cw = narrow ? 190 : 260, gap = narrow ? 50 : 70;
+        radius = Math.round(((cw + gap) / 2) / Math.tan(Math.PI / N));
+        cards.forEach((c, i) => {
+          c.style.transform = `rotateY(${i * STEP}deg) translateZ(${radius}px)`;
+        });
+      }
+
+      function frame() {
+        if (!drag) {
+          spin += (target - spin) * 0.05;      // ease toward target speed
+          angle += spin + vel;
+          vel *= 0.94;                      // momentum decay after a flick
+        }
+        stage.style.transform = `translateZ(${-radius}px) rotateY(${angle}deg)`;
+
+        // depth shading — far-side cards sit back and dim
+        for (let i = 0; i < N; i++) {
+          const t = (angle + i * STEP) * Math.PI / 180;
+          const depth = Math.cos(t);                       // 1 = front, -1 = back
+          const b = 0.42 + (depth + 1) / 2 * 0.58;
+          cards[i].style.filter = `brightness(${b.toFixed(3)})`;
+          cards[i].style.zIndex = Math.round((depth + 1) * 100);
+        }
+        raf = requestAnimationFrame(frame);
+      }
+
+      // drag to spin, with a flick that carries
+      ring.addEventListener('pointerdown', e => {
+        drag = true; lastX = e.clientX; vel = 0; ring.setPointerCapture(e.pointerId);
+      });
+      ring.addEventListener('pointermove', e => {
+        if (!drag) return;
+        const dx = e.clientX - lastX; lastX = e.clientX;
+        angle += dx * 0.22;
+        vel = dx * 0.22;
+        stage.style.transform = `translateZ(${-radius}px) rotateY(${angle}deg)`;
+      });
+      const release = () => { drag = false; };
+      ring.addEventListener('pointerup', release);
+      ring.addEventListener('pointercancel', release);
+
+      // slow down on hover so you can actually look at a piece
+      ring.addEventListener('mouseenter', () => target = 0.04);
+      ring.addEventListener('mouseleave', () => target = 0.22);
+
+      window.addEventListener('resize', place);
+
+      place();
+      if (reduced) {
+        stage.style.transform = `translateZ(${-radius}px) rotateY(0deg)`;
+        return;                                   // no spin, cards stay put
+      }
+      // only run the loop while the ring is on screen
+      new IntersectionObserver(es => {
+        if (es[0].isIntersecting) { if (!raf) raf = requestAnimationFrame(frame); }
+        else { cancelAnimationFrame(raf); raf = null; }
+      }, { threshold: .05 }).observe(ring);
+    })();
+
+    /* ======= NAV ACTIVE SECTION ======= */
+    (function () {
+      const links = { top: 'Home', work: 'My Design Solutions', exp: 'Experience' };
+      const navLinks = [...document.querySelectorAll('.nav a[href^="#"]')];
+      const byId = id => navLinks.find(a => a.getAttribute('href') === '#' + id);
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          navLinks.forEach(a => a.classList.remove('active'));
+          const a = byId(e.target.id); if (a) a.classList.add('active');
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      Object.keys(links).forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EdNeuron — Case Study · Prachi Yadav</title>
+  <meta name="description"
+    content="EdNeuron case study — designing a unified medical learning experience for students, clinicians, researchers and authors. Product design by Prachi Yadav.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ============ TOKENS ============ */
+    :root {
+      /* portfolio */
+      --bg: #0A0D1E;
+      --line-d: rgba(255, 255, 255, .09);
+      --muted-d: #9099B3;
+      --dim-d: #5C6484;
+      --pblue: #2F6BFF;
+      /* EdNeuron (sampled from the screens) */
+      --en-purple: #7D57C5;
+      --en-purple-2: #9B7BFF;
+      --en-cyan: #03C0FE;
+      --en-navy: #00001F;
+      --paper: #F7F6FB;
+      --ink: #14122B;
+      --text: #4D4B66;
+      --soft: #85839C;
+      --line: rgba(20, 18, 43, .10);
+      --head: "Manrope", system-ui, sans-serif;
+      --display: "Fredoka", system-ui, sans-serif;
+      --body: "Inter", system-ui, sans-serif;
+      --w: 900px;
+      --wide: 1180px;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --gap: 150px;
+    }
+
+    @media(max-width:720px) {
+      :root {
+        --gap: 96px
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%
+    }
+
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: var(--body);
+      font-size: 16.5px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body.lb-open {
+      overflow: hidden
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      cursor: pointer
+    }
+
+    ul,
+    ol {
+      list-style: none
+    }
+
+    ::selection {
+      background: var(--en-purple);
+      color: #fff
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--en-purple-2);
+      outline-offset: 3px;
+      border-radius: 6px
+    }
+
+    .wrap,
+    .wide {
+      position: relative;
+      z-index: 2;
+      margin: 0 auto;
+      padding-inline: 24px
+    }
+
+    .wrap {
+      max-width: var(--w)
+    }
+
+    .wide {
+      max-width: var(--wide)
+    }
+
+    /* ============ NAV (same as portfolio) ============ */
+    .nav {
+      position: fixed;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(30, 32, 52, .62);
+      border: 1px solid rgba(255, 255, 255, .07);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 16px 50px -16px rgba(0, 0, 0, .9)
+    }
+
+    .nav a {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: #D7DBEA;
+      transition: .25s var(--ease)
+    }
+
+    .nav a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, .1)
+    }
+
+    /* nav tooltips */
+    .nav a {
+      position: relative
+    }
+
+    .nav a::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translate(-50%, -4px);
+      padding: 6px 11px;
+      border-radius: 8px;
+      background: rgba(18, 20, 38, .96);
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: #fff;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .8);
+      transition: opacity .2s ease, transform .2s ease
+    }
+
+    .nav a:hover::after,
+    .nav a:focus-visible::after {
+      opacity: 1;
+      transform: translate(-50%, 0)
+    }
+
+    .nav a.active {
+      color: #fff;
+      background: rgba(124, 77, 255, .28)
+    }
+
+    @media(hover:none) {
+      .nav a::after {
+        display: none
+      }
+    }
+
+
+    @media(max-width:560px) {
+      .nav {
+        gap: 2px;
+        padding: 6px
+      }
+
+      .nav a {
+        width: 40px;
+        height: 40px
+      }
+
+      .nav a svg {
+        width: 19px;
+        height: 19px
+      }
+    }
+
+    /* ============ HERO (navy) ============ */
+    .hero-zone {
+      position: relative;
+      overflow: hidden;
+      background: var(--en-navy);
+      padding-bottom: 80px
+    }
+
+    .hero-zone::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(48vw 40vw at 82% 20%, rgba(125, 87, 197, .5), transparent 65%),
+        radial-gradient(36vw 30vw at 8% 75%, rgba(3, 192, 254, .1), transparent 70%)
+    }
+
+    .hero {
+      padding-top: 130px
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted-d);
+      padding: 9px 16px 9px 12px;
+      border: 1px solid var(--line-d);
+      border-radius: 999px;
+      transition: .3s var(--ease)
+    }
+
+    .back:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, .28);
+      transform: translateX(-3px)
+    }
+
+    .cat {
+      margin-top: 56px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #B8A6FF
+    }
+
+    .title {
+      font-family: var(--head);
+      font-weight: 800;
+      font-size: clamp(60px, 11vw, 132px);
+      line-height: .95;
+      letter-spacing: -.045em;
+      margin-top: 14px
+    }
+
+    .hero-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 24px;
+      align-items: start
+    }
+
+    .subtitle {
+      font-family: var(--head);
+      font-weight: 600;
+      font-size: clamp(24px, 3.2vw, 34px);
+      line-height: 1.2;
+      letter-spacing: -.02em;
+      color: #E6E4F4
+    }
+
+    .subtitle .hl {
+      color: var(--en-cyan)
+    }
+
+    .intro {
+      font-size: 17px;
+      color: #ABA9C6;
+      max-width: 50ch
+    }
+
+    @media(max-width:860px) {
+      .hero-row {
+        grid-template-columns: 1fr;
+        gap: 16px
+      }
+    }
+
+    .hero-shot {
+      margin-top: 60px;
+      padding: clamp(16px, 4.5vw, 60px);
+      border-radius: 28px;
+      background:
+        radial-gradient(70% 70% at 55% 35%, rgba(155, 123, 255, .5), transparent 70%),
+        linear-gradient(160deg, #2A1A6E 0%, #0B0A2A 100%);
+      border: 1px solid rgba(255, 255, 255, .1);
+      box-shadow: 0 50px 100px -40px rgba(0, 0, 0, .95)
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 44px;
+      margin-top: 44px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line-d)
+    }
+
+    .meta dt {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--dim-d);
+      margin-bottom: 4px
+    }
+
+    .meta dd {
+      font-size: 14.5px;
+      color: #E3E6F0
+    }
+
+    [data-edit] {
+      color: var(--muted-d);
+      font-style: italic
+    }
+
+    /* ============ LIGHT BODY ============ */
+    .paper {
+      position: relative;
+      z-index: 2;
+      background: var(--paper);
+      color: var(--ink);
+      padding-bottom: var(--gap)
+    }
+
+    .sec {
+      padding-top: var(--gap)
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--en-purple);
+      margin-bottom: 16px
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 18px;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--en-purple), var(--en-cyan))
+    }
+
+    .h2 {
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.08;
+      letter-spacing: -.035em;
+      color: var(--ink);
+      max-width: 18ch
+    }
+
+    .h2 .hl {
+      color: var(--en-purple)
+    }
+
+    .lead {
+      font-size: clamp(17px, 1.9vw, 19.5px);
+      line-height: 1.6;
+      color: #2C2A47;
+      max-width: 54ch
+    }
+
+    .p {
+      color: var(--text);
+      max-width: 56ch
+    }
+
+    .lead+.p {
+      margin-top: 16px
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: end
+    }
+
+    @media(max-width:820px) {
+      .two {
+        grid-template-columns: 1fr;
+        gap: 20px
+      }
+    }
+
+    /* ---- tabs ---- */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-top: 44px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 4px
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none
+    }
+
+    .tab {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 18px 9px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      transition: .3s var(--ease)
+    }
+
+    .tab .tn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: 12px;
+      background: #EEEBF7;
+      color: var(--en-purple)
+    }
+
+    .tab:hover {
+      border-color: rgba(125, 87, 197, .4)
+    }
+
+    .tab[aria-selected="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff
+    }
+
+    .tab[aria-selected="true"] .tn {
+      background: var(--en-purple);
+      color: #fff
+    }
+
+    .panel {
+      margin-top: 28px
+    }
+
+    .js .panel[hidden] {
+      display: none
+    }
+
+    .panel.show {
+      animation: fadeUp .5s var(--ease)
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* persona */
+    .persona {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 44px;
+      align-items: start
+    }
+
+    .who {
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: clamp(26px, 3vw, 32px);
+      letter-spacing: -.02em;
+      line-height: 1.15
+    }
+
+    .role {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--en-purple);
+      background: rgba(125, 87, 197, .1)
+    }
+
+    .pblock {
+      margin-top: 24px
+    }
+
+    .pblock h4 {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 8px
+    }
+
+    .pblock p {
+      color: var(--text);
+      font-size: 15.5px
+    }
+
+    .needs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .needs li {
+      font-size: 13.5px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--ink)
+    }
+
+    .pblock.frus p {
+      padding-left: 14px;
+      border-left: 2px solid #E5484D
+    }
+
+    @media(max-width:860px) {
+      .persona {
+        grid-template-columns: 1fr;
+        gap: 26px
+      }
+
+      .persona-info {
+        order: -1
+      }
+    }
+
+    /* zoomable shot */
+    .shot {
+      position: relative;
+      display: block;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 70px -38px rgba(20, 18, 43, .55);
+      cursor: zoom-in;
+      text-align: left
+    }
+
+    .shot img {
+      width: 100%;
+      transition: transform .7s var(--ease)
+    }
+
+    .shot .zh {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(20, 18, 43, .82);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: .3s var(--ease)
+    }
+
+    @media(hover:hover) {
+      .shot:hover img {
+        transform: scale(1.012)
+      }
+
+      .shot:hover .zh,
+      .shot:focus-visible .zh {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @media(hover:none) {
+      .shot .zh {
+        opacity: .9;
+        transform: none
+      }
+    }
+
+    .scroller {
+      overflow-x: auto;
+      border-radius: 16px;
+      -webkit-overflow-scrolling: touch
+    }
+
+    @media(max-width:760px) {
+      .scroller .shot {
+        width: 860px
+      }
+    }
+
+    .swipe {
+      display: none;
+      font-size: 12.5px;
+      color: var(--soft);
+      margin-top: 10px
+    }
+
+    @media(max-width:760px) {
+      .swipe {
+        display: block
+      }
+    }
+
+    .cap {
+      font-size: 15px;
+      color: var(--text);
+      margin-top: 18px;
+      max-width: 70ch
+    }
+
+    .cap b {
+      color: var(--ink)
+    }
+
+    .opps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px
+    }
+
+    .opps li {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(3, 192, 254, .35);
+      color: var(--ink)
+    }
+
+    .opps li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--en-cyan)
+    }
+
+    /* ---- insights ---- */
+    .insights {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--ink)
+    }
+
+    .ins {
+      padding: 24px 22px 6px 0
+    }
+
+    .ins+.ins {
+      padding-left: 22px;
+      border-left: 1px solid var(--line)
+    }
+
+    .ins .n {
+      font-family: var(--head);
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--en-purple)
+    }
+
+    .ins h3 {
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -.02em;
+      line-height: 1.25;
+      margin: 10px 0 8px
+    }
+
+    .ins p {
+      font-size: 14.5px;
+      color: var(--text)
+    }
+
+    @media(max-width:900px) {
+      .insights {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .ins,
+      .ins+.ins {
+        padding: 22px 16px 20px 0;
+        border-left: 0;
+        border-bottom: 1px solid var(--line)
+      }
+    }
+
+    @media(max-width:560px) {
+      .insights {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* ---- IA ---- */
+    .ia {
+      margin-top: 48px;
+      padding: clamp(24px, 4vw, 44px);
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+      text-align: center
+    }
+
+    .root {
+      display: inline-block;
+      padding: 13px 30px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: 18px
+    }
+
+    .groups {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.3fr 1.3fr 1fr;
+      gap: 16px;
+      margin-top: 56px;
+      text-align: left
+    }
+
+    .groups::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -56px;
+      width: 1px;
+      height: 28px;
+      background: rgba(20, 18, 43, .2)
+    }
+
+    .groups::after {
+      content: "";
+      position: absolute;
+      left: 18%;
+      right: 15%;
+      top: -28px;
+      height: 1px;
+      background: rgba(20, 18, 43, .2)
+    }
+
+    .group {
+      position: relative;
+      padding: 20px;
+      border-radius: 18px;
+      background: var(--paper);
+      border: 1px solid var(--line)
+    }
+
+    .group::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -29px;
+      width: 1px;
+      height: 29px;
+      background: rgba(20, 18, 43, .2)
+    }
+
+    .group h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 14px
+    }
+
+    .group h4 i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%
+    }
+
+    .group ul {
+      display: grid;
+      gap: 8px
+    }
+
+    .group li {
+      padding: 10px 14px;
+      border-radius: 11px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 14px;
+      font-weight: 500
+    }
+
+    @media(max-width:820px) {
+      .groups {
+        grid-template-columns: 1fr;
+        margin-top: 26px
+      }
+
+      .groups::before,
+      .groups::after,
+      .group::before {
+        display: none
+      }
+    }
+
+    /* ---- process (compact) ---- */
+    .process {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 0;
+      counter-reset: s
+    }
+
+    .process li {
+      position: relative;
+      padding: 0 10px 0 0
+    }
+
+    .process li::before {
+      content: "";
+      display: block;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--en-purple), var(--en-purple-2));
+      opacity: .35;
+      margin-bottom: 16px
+    }
+
+    .process li:last-child::before {
+      opacity: 1;
+      background: linear-gradient(90deg, var(--en-purple), var(--en-cyan))
+    }
+
+    .process span {
+      font-family: var(--head);
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--en-purple)
+    }
+
+    .process h3 {
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: 15.5px;
+      letter-spacing: -.01em;
+      line-height: 1.25;
+      margin-top: 6px
+    }
+
+    @media(max-width:900px) {
+      .process {
+        grid-template-columns: repeat(4, 1fr);
+        row-gap: 26px
+      }
+    }
+
+    @media(max-width:480px) {
+      .process {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    /* ---- decisions ---- */
+    .decs {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px
+    }
+
+    .dec {
+      padding: 28px 26px 30px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      transition: transform .5s var(--ease)
+    }
+
+    .dec:hover {
+      transform: translateY(-4px)
+    }
+
+    .dec .n {
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--en-purple);
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(125, 87, 197, .1)
+    }
+
+    .dec h3 {
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -.02em;
+      margin: 18px 0 8px
+    }
+
+    .dec p {
+      font-size: 15px;
+      color: var(--text)
+    }
+
+    .dec small {
+      display: block;
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: var(--soft)
+    }
+
+    @media(max-width:700px) {
+      .decs {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* ---- selected screens ---- */
+    .exp {
+      margin-top: 100px
+    }
+
+    .exp:first-of-type {
+      margin-top: 60px
+    }
+
+    .exp-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px
+    }
+
+    .exp-label span {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: var(--en-navy);
+      color: var(--en-cyan);
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: 14px
+    }
+
+    .exp-label h3 {
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: clamp(23px, 2.8vw, 29px);
+      letter-spacing: -.02em;
+      line-height: 1.15
+    }
+
+    .exp-cap {
+      font-size: 15.5px;
+      color: var(--text);
+      max-width: 44ch
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 330px 1fr;
+      gap: 56px;
+      align-items: start
+    }
+
+    .split .txt {
+      position: sticky;
+      top: 120px
+    }
+
+    .split.rev {
+      grid-template-columns: 1fr 330px
+    }
+
+    .split.rev .txt {
+      order: 2
+    }
+
+    @media(max-width:880px) {
+
+      .split,
+      .split.rev {
+        grid-template-columns: 1fr;
+        gap: 20px
+      }
+
+      .split .txt {
+        position: static
+      }
+
+      .split.rev .txt {
+        order: 0
+      }
+    }
+
+    .browser {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 40px 90px -42px rgba(20, 18, 43, .6)
+    }
+
+    .bbar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 16px;
+      background: #EDECF3;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .bbar i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%
+    }
+
+    .bbar i:nth-child(1) {
+      background: #FF5F57
+    }
+
+    .bbar i:nth-child(2) {
+      background: #FEBC2E
+    }
+
+    .bbar i:nth-child(3) {
+      background: #28C840
+    }
+
+    .bbar span {
+      margin-left: 14px;
+      flex: 1;
+      max-width: 300px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      background: #fff;
+      font-size: 12px;
+      color: var(--soft);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .browser .shot {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none
+    }
+
+    .browser>img,
+    .page img {
+      width: 100%
+    }
+
+    .page {
+      height: 660px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(20, 18, 43, .25) transparent
+    }
+
+    @media(max-width:640px) {
+      .page {
+        height: 500px
+      }
+    }
+
+    .hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-size: 12.5px;
+      color: var(--soft)
+    }
+
+    .pair {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 22px;
+      margin-top: 28px;
+      align-items: start
+    }
+
+    .pair>* {
+      min-width: 0
+    }
+
+    .cme-panel {
+      padding: clamp(18px, 3vw, 34px);
+      border-radius: 22px;
+      background:
+        radial-gradient(60% 70% at 50% 30%, rgba(155, 123, 255, .35), transparent 72%),
+        linear-gradient(160deg, #2A1A6E, #0B0A2A)
+    }
+
+    .cme-panel .shot {
+      border: 0
+    }
+
+    .cme-panel p {
+      margin-top: 18px;
+      color: #CFCBEA;
+      font-size: 14.5px
+    }
+
+    .cme-panel p b {
+      color: #fff;
+      font-family: var(--head)
+    }
+
+    @media(max-width:820px) {
+      .pair {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .mini-cap {
+      margin-top: 10px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink)
+    }
+
+    /* ---- outcome ---- */
+    .outcome {
+      font-family: var(--head);
+      font-weight: 600;
+      font-size: clamp(24px, 3.2vw, 34px);
+      line-height: 1.3;
+      letter-spacing: -.025em;
+      color: var(--ink);
+      max-width: 32ch
+    }
+
+    .outcome .hl {
+      color: var(--en-purple)
+    }
+
+    .learn {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 36px
+    }
+
+    .learn div {
+      padding: 24px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line)
+    }
+
+    .learn p {
+      color: var(--text);
+      font-size: 15.5px
+    }
+
+    @media(max-width:700px) {
+      .learn {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .endnav {
+      margin-top: 90px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .endnav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      transition: .3s var(--ease)
+    }
+
+    .endnav a:hover {
+      color: #fff;
+      border-color: var(--en-purple);
+      background: var(--en-purple);
+      transform: translateY(-2px)
+    }
+
+    /* ============ FOOTER (same as portfolio) ============ */
+    .foot {
+      padding: 130px 0 60px;
+      text-align: center;
+      position: relative
+    }
+
+    .foot h2 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(28px, 5.2vw, 40px);
+      margin-bottom: 14px
+    }
+
+    .foot p {
+      font-size: 14.5px;
+      color: var(--muted-d);
+      max-width: 46ch;
+      margin: 0 auto 34px
+    }
+
+    .getin {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid var(--line-d);
+      font-size: 14.5px;
+      font-weight: 500;
+      transition: .35s var(--ease)
+    }
+
+    .getin:hover {
+      background: var(--pblue);
+      border-color: var(--pblue);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px -16px rgba(47, 107, 255, .8)
+    }
+
+    .resume-wrap {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center
+    }
+
+    .resume-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 26px;
+      border-radius: 999px;
+      border: 1px solid var(--line-d);
+      color: var(--muted-d);
+      font-size: 14px;
+      font-weight: 500;
+      transition: .3s var(--ease)
+    }
+
+    .resume-btn:hover {
+      color: #fff;
+      border-color: var(--pblue);
+      background: rgba(255, 255, 255, .04);
+      transform: translateY(-2px)
+    }
+
+    .copy {
+      margin-top: 64px;
+      font-size: 12px;
+      color: var(--dim-d)
+    }
+
+    /* ============ LIGHTBOX ============ */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: none;
+      flex-direction: column;
+      background: rgba(6, 8, 20, .94);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px)
+    }
+
+    .lightbox.open {
+      display: flex
+    }
+
+    .lb-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line-d)
+    }
+
+    .lb-title {
+      font-size: 14px;
+      color: #C3CADD;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .lb-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0
+    }
+
+    .lb-btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-d);
+      background: rgba(255, 255, 255, .06);
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff
+    }
+
+    .lb-btn:hover {
+      background: rgba(255, 255, 255, .14)
+    }
+
+    .lb-stage {
+      flex: 1;
+      overflow: auto;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      cursor: zoom-in
+    }
+
+    .lb-stage img {
+      max-width: 100%;
+      max-height: calc(100vh - 110px);
+      border-radius: 10px
+    }
+
+    .lb-stage.full {
+      place-items: start;
+      cursor: zoom-out
+    }
+
+    .lb-stage.full img {
+      max-width: none;
+      max-height: none;
+      width: auto
+    }
+
+    [hidden]{display:none!important}
+
+    /* ============ REVEAL ============ */
+    .rv {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .8s var(--ease), transform .8s var(--ease)
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+
+      .rv {
+        opacity: 1;
+        transform: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV (links back to the main portfolio page) -->
+  <nav class="nav">
+    <a href="index.html#top" aria-label="Home" data-tip="Home"><svg width="23" height="23" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />
+      </svg></a>
+    <a href="index.html#work" aria-label="My Design Solutions" data-tip="My Design Solutions"><svg width="23" height="23" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7h6l2 2h10v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
+      </svg></a>
+    <a href="index.html#exp" aria-label="Experience" data-tip="Experience"><svg width="23" height="23" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="7" width="18" height="13" rx="2" />
+        <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" />
+      </svg></a>
+    <a href="assets/Prachi_Yadav_Resume.pdf" target="_blank" rel="noopener" aria-label="Resume" data-tip="Resume"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 3H7a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7z" />
+        <path d="M14 3v4h4" />
+      </svg></a>
+    <a href="mailto:y16prachi04@gmail.com" aria-label="Email" data-tip="y16prachi04@gmail.com"><svg width="23" height="23" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
+      </svg></a>
+  </nav>
+
+  <!--
+    ALL IMAGES live in assets/edneuron/ — replace a file with the same name to update it.
+      edneuron-home-hero.webp          hero (top of homepage)
+      edneuron-homepage.webp           full homepage (scroll window)
+      edneuron-article.webp            ← ADD a high-res article page here (block stays hidden until it exists)
+      edneuron-dashboard-light.webp    signed-in dashboard
+      edneuron-detail-cme-card.webp    CME card close-up
+      edneuron-upload-article.webp     upload article form
+      persona-0X-*.webp / journey-0X-*.webp
+  -->
+
+  <!-- ============ HERO + OVERVIEW ============ -->
+  <div class="hero-zone" id="top">
+    <header class="hero wide">
+      <a class="back rv" href="index.html#work">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to Portfolio
+      </a>
+
+      <p class="cat rv">Product Design · Web Platform</p>
+      <h1 class="title rv">EdNeuron</h1>
+      <div class="hero-row">
+        <p class="subtitle rv">Designing a unified <span class="hl">medical learning</span> experience</p>
+        <p class="intro rv">A medical education platform connecting clinical case studies, research, CME learning, and
+          publishing into one focused experience.</p>
+      </div>
+
+      <div class="hero-shot rv">
+        <div class="browser">
+          <div class="bbar"><i></i><i></i><i></i><span>edneuron</span></div>
+          <img src="assets/edneuron/edneuron-home-hero.webp"
+            alt="EdNeuron homepage — Science behind the medical practice. Every discipline, every day." width="1920"
+            height="1160">
+        </div>
+      </div>
+
+      <dl class="meta rv">
+        <div>
+          <dt>Role</dt>
+          <dd>UI/UX &amp; Product Designer</dd>
+        </div>
+        <div>
+          <dt>Project</dt>
+          <dd>EdNeuron</dd>
+        </div>
+        <div>
+          <dt>Focus</dt>
+          <dd>Product Design · UX Research · Information Architecture · User Flows · Dashboard Design</dd>
+        </div>
+        <div>
+          <dt>Platform</dt>
+          <dd>Web</dd>
+        </div>
+      </dl>
+    </header>
+  </div>
+
+  <main class="paper">
+
+    <!-- ============ CHALLENGE ============ -->
+    <section class="sec wide">
+      <div class="two">
+        <div>
+          <p class="eyebrow rv">The Challenge</p>
+          <h2 class="h2 rv">Medical learning was spread across <span class="hl">too many places</span></h2>
+        </div>
+        <div>
+          <p class="lead rv">Medical professionals and learners often rely on multiple platforms for clinical
+            knowledge, research, learning, and professional development. This created fragmented journeys across
+            different types of medical content.</p>
+          <p class="p rv">EdNeuron needed a more structured experience that could bring these needs together while
+            keeping discovery, reading, saving, publishing, and CME tracking simple.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PERSONAS ============ -->
+    <section class="sec wide">
+      <div class="two">
+        <div>
+          <p class="eyebrow rv">Understanding the Users</p>
+          <h2 class="h2 rv">Four users, four <span class="hl">different goals</span></h2>
+        </div>
+        <p class="p rv">EdNeuron serves users with very different goals — from students looking for quick clinical
+          references to researchers and doctors looking to publish, learn, and maintain their professional
+          development. I mapped these needs to see where their journeys overlapped and where they needed specialized
+          experiences.</p>
+      </div>
+
+      <div class="tabs rv" role="tablist" aria-label="User personas" data-tabs>
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t-p1"><span
+            class="tn">01</span>Dr. Vikram Sarabhai</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t-p2"><span
+            class="tn">02</span>Rohan Gupta</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t-p3"><span
+            class="tn">03</span>Dr. Rajesh Verma</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p4" id="t-p4"><span
+            class="tn">04</span>Dr. Ananya Sharma</button>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p1" aria-labelledby="t-p1">
+        <div class="persona">
+          <button class="shot" data-zoom aria-label="Open Dr. Vikram Sarabhai persona full size">
+            <img src="assets/edneuron/persona-01-vikram-sarabhai.webp" alt="User persona: Dr. Vikram Sarabhai"
+              width="2600" height="2337"><span class="zh">⤢ Enlarge</span>
+          </button>
+          <div class="persona-info">
+            <h3 class="who">Dr. Vikram Sarabhai</h3>
+            <span class="role">Senior Clinical Researcher</span>
+            <div class="pblock">
+              <h4>Primary goal</h4>
+              <p>Publish credible clinical research and establish authority through a verified medical platform.</p>
+            </div>
+            <div class="pblock">
+              <h4>Key needs</h4>
+              <ul class="needs">
+                <li>Verified publishing environment</li>
+                <li>Author verification</li>
+                <li>Advanced research discovery</li>
+                <li>Citation &amp; reader analytics</li>
+                <li>Efficient peer-review &amp; publishing flow</li>
+              </ul>
+            </div>
+            <div class="pblock frus">
+              <h4>Key frustration</h4>
+              <p>Long and unclear peer-review processes and limited research-specific search/filtering.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p2" aria-labelledby="t-p2" hidden>
+        <div class="persona">
+          <button class="shot" data-zoom aria-label="Open Rohan Gupta persona full size">
+            <img src="assets/edneuron/persona-02-rohan-gupta.webp" alt="User persona: Rohan Gupta" width="2600"
+              height="2337"><span class="zh">⤢ Enlarge</span>
+          </button>
+          <div class="persona-info">
+            <h3 class="who">Rohan Gupta</h3>
+            <span class="role">MBBS Student</span>
+            <div class="pblock">
+              <h4>Primary goal</h4>
+              <p>Quickly discover trustworthy medical references, save useful articles, and support exam/assignment
+                preparation.</p>
+            </div>
+            <div class="pblock">
+              <h4>Key needs</h4>
+              <ul class="needs">
+                <li>Fast specialty-based search</li>
+                <li>Easy bookmarking</li>
+                <li>Accessible clinical references</li>
+                <li>Short, scannable content</li>
+                <li>Personalized / saved learning resources</li>
+              </ul>
+            </div>
+            <div class="pblock frus">
+              <h4>Key frustration</h4>
+              <p>Difficulty finding specific medical content across fragmented resources and cluttered interfaces.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p3" aria-labelledby="t-p3" hidden>
+        <div class="persona">
+          <button class="shot" data-zoom aria-label="Open Dr. Rajesh Verma persona full size">
+            <img src="assets/edneuron/persona-03-rajesh-verma.webp" alt="User persona: Dr. Rajesh Verma" width="2600"
+              height="2337"><span class="zh">⤢ Enlarge</span>
+          </button>
+          <div class="persona-info">
+            <h3 class="who">Dr. Rajesh Verma</h3>
+            <span class="role">Senior Consultant</span>
+            <div class="pblock">
+              <h4>Primary goal</h4>
+              <p>Access concise, evidence-based clinical content and earn CME credits within a busy schedule.</p>
+            </div>
+            <div class="pblock">
+              <h4>Key needs</h4>
+              <ul class="needs">
+                <li>Quick specialty filtering</li>
+                <li>Short clinical case studies</li>
+                <li>Read-time indicators</li>
+                <li>Medical webinars</li>
+                <li>CME tracking</li>
+              </ul>
+            </div>
+            <div class="pblock frus">
+              <h4>Key frustration</h4>
+              <p>Long-form content, difficult discovery, and inefficient webinar/learning registration experiences.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p4" aria-labelledby="t-p4" hidden>
+        <div class="persona">
+          <button class="shot" data-zoom aria-label="Open Dr. Ananya Sharma persona full size">
+            <img src="assets/edneuron/persona-04-ananya-sharma.webp" alt="User persona: Dr. Ananya Sharma" width="2600"
+              height="2337"><span class="zh">⤢ Enlarge</span>
+          </button>
+          <div class="persona-info">
+            <h3 class="who">Dr. Ananya Sharma</h3>
+            <span class="role">Doctor / Research Author</span>
+            <div class="pblock">
+              <h4>Primary goal</h4>
+              <p>Publish clinical work through a credible platform while understanding the submission, pricing,
+                review, and publishing process.</p>
+            </div>
+            <div class="pblock">
+              <h4>Key needs</h4>
+              <ul class="needs">
+                <li>Simple author onboarding</li>
+                <li>Clear publishing requirements</li>
+                <li>Transparent pricing</li>
+                <li>Article submission tracking</li>
+                <li>CME &amp; publishing recognition</li>
+              </ul>
+            </div>
+            <div class="pblock frus">
+              <h4>Key frustration</h4>
+              <p>Complex publishing processes, unclear pricing/requirements, and lack of visibility into review
+                status.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ JOURNEY MAPS ============ -->
+    <section class="sec wide">
+      <div class="two">
+        <div>
+          <p class="eyebrow rv">User Journey Mapping</p>
+          <h2 class="h2 rv">Mapping the <span class="hl">user journeys</span></h2>
+        </div>
+        <p class="p rv">Because each user approached EdNeuron with a different goal, I mapped their end-to-end
+          journeys to identify friction points, emotional states, touchpoints, and opportunities for improvement.</p>
+      </div>
+
+      <div class="tabs rv" role="tablist" aria-label="User journey maps" data-tabs>
+        <button class="tab" role="tab" aria-selected="true" aria-controls="j1" id="t-j1"><span
+            class="tn">01</span>Research &amp; Publishing</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="j2" id="t-j2"><span
+            class="tn">02</span>Student Learning</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="j3" id="t-j3"><span
+            class="tn">03</span>Clinician Learning &amp; CME</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="j4" id="t-j4"><span
+            class="tn">04</span>Doctor / Author Publishing</button>
+      </div>
+
+      <div class="panel" role="tabpanel" id="j1" aria-labelledby="t-j1">
+        <div class="scroller"><button class="shot" data-zoom aria-label="Open researcher journey map full size">
+            <img src="assets/edneuron/journey-01-researcher-vikram.webp"
+              alt="User journey map — Dr. Vikram Sarabhai, researcher" width="4200" height="2932"><span
+              class="zh">⤢ Enlarge</span></button></div>
+        <p class="swipe">← Swipe to see the whole map, or tap to open full size</p>
+        <p class="cap"><b>Researcher journey</b> — from discovering literature and verifying author credentials to
+          publishing research and tracking its impact.</p>
+        <ul class="opps">
+          <li>Better research discovery &amp; filtering</li>
+          <li>Dataset / citation access</li>
+          <li>Author verification</li>
+          <li>Transparent publishing tiers</li>
+          <li>Peer-review status tracking</li>
+          <li>Research analytics</li>
+        </ul>
+      </div>
+
+      <div class="panel" role="tabpanel" id="j2" aria-labelledby="t-j2" hidden>
+        <div class="scroller"><button class="shot" data-zoom aria-label="Open student journey map full size">
+            <img src="assets/edneuron/journey-02-student-rohan.webp" alt="User journey map — Rohan Gupta, MBBS student"
+              width="4200" height="2932"><span class="zh">⤢ Enlarge</span></button></div>
+        <p class="swipe">← Swipe to see the whole map, or tap to open full size</p>
+        <p class="cap"><b>Student journey</b> — from discovering specialty-specific content to reading, saving,
+          commenting, and returning to useful resources.</p>
+        <ul class="opps">
+          <li>Fast search &amp; discovery</li>
+          <li>Read-time indicators</li>
+          <li>Bookmarking</li>
+          <li>Saved articles</li>
+          <li>Comments</li>
+          <li>Personalized newsletter / retention</li>
+        </ul>
+      </div>
+
+      <div class="panel" role="tabpanel" id="j3" aria-labelledby="t-j3" hidden>
+        <div class="scroller"><button class="shot" data-zoom aria-label="Open clinician journey map full size">
+            <img src="assets/edneuron/journey-03-clinician-rajesh.webp"
+              alt="User journey map — Dr. Rajesh Verma, senior consultant" width="4200" height="2932"><span
+              class="zh">⤢ Enlarge</span></button></div>
+        <p class="swipe">← Swipe to see the whole map, or tap to open full size</p>
+        <p class="cap"><b>Clinician journey</b> — from quickly discovering relevant clinical cases and webinars to
+          publishing and earning CME credits.</p>
+        <ul class="opps">
+          <li>Specialty filtering</li>
+          <li>Quick-read clinical content</li>
+          <li>Webinar discovery</li>
+          <li>Become-an-author flow</li>
+          <li>Article submission</li>
+          <li>CME credit tracking</li>
+        </ul>
+      </div>
+
+      <div class="panel" role="tabpanel" id="j4" aria-labelledby="t-j4" hidden>
+        <div class="scroller"><button class="shot" data-zoom aria-label="Open author journey map full size">
+            <img src="assets/edneuron/journey-04-author-ananya.webp"
+              alt="User journey map — Dr. Ananya Sharma, doctor and author" width="4200" height="2932"><span
+              class="zh">⤢ Enlarge</span></button></div>
+        <p class="swipe">← Swipe to see the whole map, or tap to open full size</p>
+        <p class="cap"><b>Author journey</b> — from account creation and author approval to article submission,
+          pricing, review, and dashboard tracking.</p>
+        <ul class="opps">
+          <li>Simple onboarding</li>
+          <li>Author verification</li>
+          <li>Article submission</li>
+          <li>Transparent pricing</li>
+          <li>Review status</li>
+          <li>Dashboard tracking</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ INSIGHTS ============ -->
+    <section class="sec wide">
+      <p class="eyebrow rv">Key Insights</p>
+      <h2 class="h2 rv">What the journeys revealed</h2>
+      <div class="insights rv">
+        <div class="ins"><span class="n">01</span>
+          <h3>Discovery needed to be faster</h3>
+          <p>Users needed better specialty-based search and filtering instead of navigating through large amounts of
+            content.</p>
+        </div>
+        <div class="ins"><span class="n">02</span>
+          <h3>Different users, different entry points</h3>
+          <p>The architecture needed to support multiple journeys without becoming confusing.</p>
+        </div>
+        <div class="ins"><span class="n">03</span>
+          <h3>Trust was essential</h3>
+          <p>Medical content, author credentials, research quality, and publishing status needed to be communicated
+            clearly.</p>
+        </div>
+        <div class="ins"><span class="n">04</span>
+          <h3>Progress needed visibility</h3>
+          <p>Users needed clearer feedback around saved content, article status, peer review, publishing, and CME
+            credits.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ IA + PROCESS ============ -->
+    <section class="sec wide">
+      <div class="two">
+        <div>
+          <p class="eyebrow rv">Information Architecture</p>
+          <h2 class="h2 rv">Four journeys, <span class="hl">one structure</span></h2>
+        </div>
+        <p class="p rv">Everyone shares the same discovery and learning layer; signed-in users get a personal space
+          to track progress; authors get an additional publishing path on top.</p>
+      </div>
+
+      <div class="ia rv" role="img"
+        aria-label="EdNeuron information architecture: Discover and learn, Track progress, Publish">
+        <span class="root">EdNeuron</span>
+        <div class="groups">
+          <div class="group">
+            <h4><i style="background:var(--en-cyan)"></i>Discover &amp; learn</h4>
+            <ul>
+              <li>Clinical Case Studies</li>
+              <li>Research Papers</li>
+              <li>Webinars</li>
+              <li>Personalized Content</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h4><i style="background:var(--en-purple)"></i>Track progress</h4>
+            <ul>
+              <li>Dashboard</li>
+              <li>Saved Articles</li>
+              <li>CME Credits</li>
+              <li>Analytics</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h4><i style="background:#18B884"></i>Publish</h4>
+            <ul>
+              <li>Author / Publishing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <ol class="process rv" aria-label="Design process">
+        <li><span>01</span>
+          <h3>Research</h3>
+        </li>
+        <li><span>02</span>
+          <h3>User Personas</h3>
+        </li>
+        <li><span>03</span>
+          <h3>Journey Mapping</h3>
+        </li>
+        <li><span>04</span>
+          <h3>Information Architecture</h3>
+        </li>
+        <li><span>05</span>
+          <h3>User Flows</h3>
+        </li>
+        <li><span>06</span>
+          <h3>Wireframes</h3>
+        </li>
+        <li><span>07</span>
+          <h3>UI Design</h3>
+        </li>
+        <li><span>08</span>
+          <h3>Final Product</h3>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ DECISIONS ============ -->
+    <section class="sec wide">
+      <p class="eyebrow rv">Key Design Decisions</p>
+      <h2 class="h2 rv">What shaped the experience</h2>
+      <div class="decs">
+        <div class="dec rv"><span class="n">01</span>
+          <h3>Clear content hierarchy</h3>
+          <p>Large amounts of medical and academic information were structured into scannable sections.</p>
+          <small>Seen in: dashboard stat cards, staged upload form</small>
+        </div>
+        <div class="dec rv"><span class="n">02</span>
+          <h3>Specialty-based discovery</h3>
+          <p>Users can quickly narrow down content according to their medical interests.</p>
+          <small>Seen in: homepage search + "Browse specialties" chips</small>
+        </div>
+        <div class="dec rv"><span class="n">03</span>
+          <h3>Multiple journeys, one ecosystem</h3>
+          <p>The architecture supports students, clinicians, researchers, and authors without making the experience
+            feel fragmented.</p>
+          <small>Seen in: one sidebar — Overview, My Articles, Upload Articles</small>
+        </div>
+        <div class="dec rv"><span class="n">04</span>
+          <h3>Visibility of progress</h3>
+          <p>Saved content, publishing status, review, and CME progress are made easier to understand.</p>
+          <small>Seen in: CME progress bar with target, saved-articles count</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SELECTED SCREENS ============ -->
+    <section class="sec wide">
+      <div class="two">
+        <div>
+          <p class="eyebrow rv">Final Design</p>
+          <h2 class="h2 rv">Selected screens</h2>
+        </div>
+        <p class="p rv">Scroll inside the windows to see full pages. Click any screen to enlarge.</p>
+      </div>
+
+      <!-- A — Homepage -->
+      <div class="exp split">
+        <div class="txt rv">
+          <div class="exp-label"><span>A</span>
+            <h3>Homepage &amp; discovery</h3>
+          </div>
+          <p class="exp-cap">One search bar and specialty chips give every user — student or consultant — the same fast
+            starting point, followed by webinars and articles to explore.</p>
+          <p class="hint">↓ Scroll inside the window</p>
+        </div>
+        <div class="browser rv">
+          <div class="bbar"><i></i><i></i><i></i><span>edneuron · Home</span></div>
+          <div class="page" tabindex="0" aria-label="EdNeuron homepage, scrollable">
+            <img src="assets/edneuron/edneuron-homepage.webp" alt="EdNeuron homepage" width="1920" height="7190">
+          </div>
+        </div>
+      </div>
+
+      <!-- B — Article page (hidden until a high-res file exists) -->
+      <div class="exp split rev" id="block-article">
+        <div class="txt rv">
+          <div class="exp-label"><span>B</span>
+            <h3>Article experience</h3>
+          </div>
+          <p class="exp-cap">Long-form clinical articles with clear headings, figures and a sidebar for related and
+            trending reads.</p>
+        </div>
+        <div class="browser rv">
+          <div class="bbar"><i></i><i></i><i></i><span>edneuron · Article</span></div>
+          <div class="page" tabindex="0" aria-label="EdNeuron article page, scrollable">
+            <img src="assets/edneuron/edneuron-article.webp" alt="EdNeuron article page"
+              onerror="window.hideArticle && hideArticle()">
+          </div>
+        </div>
+      </div>
+
+      <!-- C — Dashboard -->
+      <div class="exp">
+        <div class="rv">
+          <div class="exp-label"><span class="ltr">C</span>
+            <h3>Dashboard &amp; saved content</h3>
+          </div>
+          <p class="exp-cap">What a signed-in user lands on: saved articles, CME credits, likes and views at a glance,
+            followed by content recommended for them.</p>
+        </div>
+        <div class="browser rv" style="margin-top:26px">
+          <div class="bbar"><i></i><i></i><i></i><span>edneuron · Overview</span></div>
+          <button class="shot" data-zoom aria-label="Open dashboard full size">
+            <img src="assets/edneuron/edneuron-dashboard-light.webp"
+              alt="EdNeuron signed-in overview dashboard with saved articles, CME credits, likes, views and recommended articles"
+              width="3000" height="2400"><span class="zh">⤢ Enlarge</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- D — CME + Publishing -->
+      <div class="exp">
+        <div class="rv">
+          <div class="exp-label"><span class="ltr">D</span>
+            <h3>CME &amp; publishing</h3>
+          </div>
+          <p class="exp-cap">Progress you can read in a second, and a staged form that keeps article submission
+            manageable.</p>
+        </div>
+        <div class="pair">
+          <div class="rv">
+            <div class="browser">
+              <div class="bbar"><i></i><i></i><i></i><span>edneuron · Upload Articles</span></div>
+              <div class="page" tabindex="0" aria-label="Upload article form, scrollable">
+                <img src="assets/edneuron/edneuron-upload-article.webp"
+                  alt="EdNeuron upload article form in four stages" width="2200" height="3345">
+              </div>
+            </div>
+            <p class="mini-cap">Upload Articles — article info, manuscript details, authors, upload</p>
+          </div>
+          <div class="cme-panel rv">
+            <button class="shot" data-zoom aria-label="Open CME credits card full size">
+              <img src="assets/edneuron/edneuron-detail-cme-card.webp" alt="CME credits card — 24 of a 30 target"
+                width="1170" height="900"><span class="zh">⤢ Enlarge</span>
+            </button>
+            <p><b>CME credits</b> — the current count, a target and a progress bar, so clinicians see how close they
+              are without opening another page.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OUTCOME + LEARNINGS ============ -->
+    <section class="sec wrap">
+      <p class="eyebrow rv">Outcome</p>
+      <p class="outcome rv">The final experience brings multiple medical learning and professional journeys into
+        <span class="hl">one structured ecosystem</span>, making content discovery, learning, publishing, and progress
+        tracking easier to navigate.
+      </p>
+
+      <div style="margin-top:100px">
+        <p class="eyebrow rv">What I learned</p>
+        <div class="learn rv">
+          <div>
+            <p>This project helped me understand how different user goals can coexist within one product without
+              forcing everyone through the same journey. The biggest design challenge was balancing a large amount of
+              medical content with clarity, trust, and ease of navigation.</p>
+          </div>
+          <div>
+            <p>Mapping personas and journeys helped me move from designing individual screens to thinking about the
+              complete product experience.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="endnav rv">
+        <a href="index.html#work">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Back to Portfolio
+        </a>
+        <a href="#top">
+          Back to Top
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- CTA / FOOTER (same as portfolio) -->
+  <footer class="foot wrap">
+    <h2 class="rv">Let's Collaborate Together</h2>
+    <p class="rv">Let's craft digital experiences that are not just beautiful - but meaningful
+      and genuinely useful for the people using them.</p>
+    <a class="getin rv" href="mailto:y16prachi04@gmail.com" target="_blank"
+      onclick="var w = window.open('https://mail.google.com/mail/?view=cm&fs=1&to=y16prachi04@gmail.com', '_blank'); if(w){return false;}">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="m3 7 9 6 9-6" />
+      </svg>
+      Get in touch
+    </a>
+    <div class="resume-wrap rv">
+      <a href="assets/Prachi_Yadav_Resume.pdf" download class="resume-btn" aria-label="Download Resume">Download Resume</a>
+    </div>
+    <p class="copy">© 2026 Prachi Yadav · Designed &amp; built by me</p>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lb-top">
+      <span class="lb-title" id="lb-title"></span>
+      <div class="lb-actions">
+        <button class="lb-btn" id="lb-size">Actual size</button>
+        <button class="lb-btn" id="lb-close" aria-label="Close">✕ Close</button>
+      </div>
+    </div>
+    <div class="lb-stage" id="lb-stage"><img id="lb-img" alt=""></div>
+  </div>
+
+  <script>
+    document.documentElement.classList.add('js');
+
+    /* article block: hide and re-letter C/D → B/C until edneuron-article.webp exists */
+    window.hideArticle = function () {
+      const b = document.getElementById('block-article');
+      if (!b || b.hidden) return;
+      b.hidden = true;
+      const l = document.querySelectorAll('.ltr'); if (l[0]) l[0].textContent = 'B'; if (l[1]) l[1].textContent = 'C';
+    };
+    (function () {
+      const i = document.querySelector('#block-article img');
+      if (i && i.complete && i.naturalWidth === 0) hideArticle();
+    })();
+
+    /* tabs */
+    document.querySelectorAll('[data-tabs]').forEach(list => {
+      const tabs = [...list.querySelectorAll('[role="tab"]')];
+      const select = (t, focus) => {
+        tabs.forEach(x => {
+          const on = x === t;
+          x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1;
+          const p = document.getElementById(x.getAttribute('aria-controls'));
+          p.hidden = !on; p.classList.toggle('show', on);
+        });
+        if (focus) t.focus();
+      };
+      tabs.forEach((t, i) => {
+        t.tabIndex = i ? -1 : 0;
+        t.addEventListener('click', () => select(t));
+        t.addEventListener('keydown', e => {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            select(tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length], true);
+          }
+        });
+      });
+    });
+
+    /* lightbox */
+    (function () {
+      const lb = document.getElementById('lightbox'), img = document.getElementById('lb-img'),
+        stage = document.getElementById('lb-stage'), title = document.getElementById('lb-title'),
+        sizeBtn = document.getElementById('lb-size'), close = document.getElementById('lb-close');
+      let last = null;
+      const setFull = on => { stage.classList.toggle('full', on); sizeBtn.textContent = on ? 'Fit to screen' : 'Actual size'; };
+      document.querySelectorAll('[data-zoom]').forEach(btn => btn.addEventListener('click', () => {
+        const src = btn.querySelector('img'); last = btn;
+        img.src = src.currentSrc || src.src; img.alt = src.alt; title.textContent = src.alt;
+        setFull(false); lb.classList.add('open'); document.body.classList.add('lb-open'); close.focus();
+      }));
+      const shut = () => { lb.classList.remove('open'); document.body.classList.remove('lb-open'); if (last) last.focus(); };
+      close.addEventListener('click', shut);
+      sizeBtn.addEventListener('click', () => setFull(!stage.classList.contains('full')));
+      stage.addEventListener('click', e => { if (e.target === img) setFull(!stage.classList.contains('full')); else shut(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) shut(); });
+    })();
+
+    /* fade-up reveal (same as portfolio) */
+    const io = new IntersectionObserver(es => {
+      es.forEach((e, i) => {
+        if (e.isIntersecting) { setTimeout(() => e.target.classList.add('in'), (i % 6) * 70); io.unobserve(e.target); }
+      });
+    }, { threshold: .1, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  </script>
+</body>
+
+</html>
