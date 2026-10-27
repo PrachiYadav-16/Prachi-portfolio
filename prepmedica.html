@@ -10,16 +10,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Varela+Round&family=Kurale&family=Inter:wght@400;500;600&display=swap"
     rel="stylesheet">
   <style>
     /* ============ TOKENS ============ */
     :root {
       /* portfolio */
-      --bg: #0A0D1E;
+      --bg: #0E0E10;
       --line-d: rgba(255, 255, 255, .09);
-      --muted-d: #9099B3;
-      --dim-d: #5C6484;
+      --muted-d: #9A9AA4;
+      --dim-d: #64646E;
       --pblue: #2F6BFF;
       /* PrepMedica (sampled from the screens) */
       --pm: #4B2697;
@@ -34,7 +34,8 @@
       --soft: #8A86A0;
       --line: rgba(21, 17, 43, .09);
       --head: "Sora", system-ui, sans-serif;
-      --display: "Fredoka", system-ui, sans-serif;
+      --display: "Varela Round", system-ui, sans-serif;
+      --accent-font: "Kurale", Georgia, serif;
       --body: "Inter", system-ui, sans-serif;
       --w: 900px;
       --wide: 1180px;
@@ -144,7 +145,7 @@
       gap: 6px;
       padding: 8px;
       border-radius: 999px;
-      background: rgba(30, 32, 52, .72);
+      background: rgba(38, 38, 42, .72);
       border: 1px solid rgba(255, 255, 255, .07);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
@@ -157,7 +158,7 @@
       display: grid;
       place-items: center;
       border-radius: 999px;
-      color: #D7DBEA;
+      color: #DCDCE2;
       transition: .25s var(--ease)
     }
 
@@ -179,7 +180,7 @@
       transform: translate(-50%, -4px);
       padding: 6px 11px;
       border-radius: 8px;
-      background: rgba(18, 20, 38, .96);
+      background: rgba(22, 22, 25, .96);
       border: 1px solid rgba(255, 255, 255, .1);
       color: #fff;
       font-family: "Inter", system-ui, sans-serif;
@@ -1214,6 +1215,22 @@
         overflow-x: clip
       }
     }
+    
+    /* ===== LIGHT THEME (matches portfolio home): paper body + light nav/footer;
+       the project cover at the top keeps its brand colours ===== */
+    body { background: #F4F2ED; color: #17171B }
+    .nav { background: rgba(255, 255, 255, .78); border: 1px solid rgba(23, 23, 27, .07); box-shadow: 0 14px 40px -18px rgba(30, 30, 40, .3) }
+    .nav a { color: #2A2A31 }
+    .nav a:hover { color: #000; background: rgba(23, 23, 27, .06) }
+    .foot { color: #17171B }
+    .foot::before { background: rgba(23, 23, 27, .1) }
+    .foot h2 { font-family: var(--accent-font); font-weight: 400; color: #17171B }
+    .foot p { color: #5E5E68 }
+    .getin { background: #fff; border: 1px solid rgba(23, 23, 27, .1); color: #17171B }
+    .getin:hover { background: #2B63E0; border-color: #2B63E0; color: #fff }
+    .resume-btn { color: #4A4A53; border-color: rgba(23, 23, 27, .14) }
+    .resume-btn:hover { color: #17171B; background: #fff; border-color: #2B63E0 }
+    .copy { color: #8A8A93 }
   </style>
 </head>
 

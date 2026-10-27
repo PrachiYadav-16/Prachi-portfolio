@@ -9,21 +9,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Kurale&family=Inter:wght@400;500;600&display=swap"
     rel="stylesheet">
   <style>
     :root {
-      --bg: #0A0D1E;
-      --bg-2: #0E1226;
+      --bg: #0E0E10;
+      --bg-2: #141416;
       --card: #FFFFFF;
-      --dark-card-a: #1E2233;
-      --dark-card-b: #13162A;
+      --dark-card-a: #1F1F23;
+      --dark-card-b: #151518;
       --line: rgba(255, 255, 255, .09);
       --ink: #FFFFFF;
-      --muted: #9099B3;
-      --dim: #5C6484;
+      --muted: #9A9AA4;
+      --dim: #64646E;
       --blue: #2F6BFF;
-      --display: "Fredoka", system-ui, sans-serif;
+      --display: "Varela Round", system-ui, sans-serif;
+      --accent-font: "Kurale", Georgia, serif;
       --body: "Inter", system-ui, sans-serif;
       --w: 820px;
       --ease: cubic-bezier(.22, 1, .36, 1);
@@ -191,7 +192,7 @@
       gap: 6px;
       padding: 8px;
       border-radius: 999px;
-      background: rgba(30, 32, 52, .55);
+      background: rgba(38, 38, 42, .55);
       border: 1px solid rgba(255, 255, 255, .07);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
@@ -204,7 +205,7 @@
       display: grid;
       place-items: center;
       border-radius: 999px;
-      color: #D7DBEA;
+      color: #DCDCE2;
       transition: .25s var(--ease)
     }
 
@@ -226,7 +227,7 @@
       transform: translate(-50%, -4px);
       padding: 6px 11px;
       border-radius: 8px;
-      background: rgba(18, 20, 38, .96);
+      background: rgba(22, 22, 25, .96);
       border: 1px solid rgba(255, 255, 255, .1);
       color: #fff;
       font-family: "Inter", system-ui, sans-serif;
@@ -291,7 +292,7 @@
       font-family: var(--display);
       font-weight: 400;
       font-size: clamp(19px, 3.2vw, 30px);
-      color: #8C93AD;
+      color: #8E8E98;
       margin-bottom: 2px;
       letter-spacing: .005em
     }
@@ -391,7 +392,7 @@
       font-family: var(--display);
       font-weight: 400;
       font-size: clamp(18px, 3.4vw, 33px);
-      color: #A9AFC6;
+      color: #AAAAB3;
       white-space: nowrap
     }
 
@@ -574,14 +575,14 @@
       font-family: var(--display);
       font-weight: 500;
       font-size: clamp(14px, 2.2vw, 19px);
-      color: #69718F;
+      color: #6E6E78;
       letter-spacing: .02em;
       transition: .3s var(--ease);
       filter: grayscale(1)
     }
 
     .brandset span:hover {
-      color: #C7CEE2
+      color: #CDCDD4
     }
 
     /* ============ SECTION TITLES ============ */
@@ -596,7 +597,7 @@
 
     .stitle .t1 {
       font-weight: 400;
-      color: #A9AFC6
+      color: #AAAAB3
     }
 
     .stitle .t2 {
@@ -723,7 +724,7 @@
       position: absolute;
       inset: 0;
       z-index: 3;
-      background: rgba(8, 10, 24, .18);
+      background: rgba(10, 10, 12, .18);
       opacity: 0;
       transition: opacity .4s var(--ease);
       pointer-events: none
@@ -1200,7 +1201,7 @@
       font-family: var(--display);
       font-weight: 600;
       font-size: 15px;
-      color: #1A1E33;
+      color: #1C1C20;
       box-shadow: 0 8px 18px -8px rgba(0, 0, 0, .7), inset 0 0 0 1px rgba(0, 0, 0, .04)
     }
 
@@ -1216,7 +1217,7 @@
       font-size: 8.5px;
       font-weight: 600;
       line-height: 1;
-      color: #1A1E33
+      color: #1C1C20
     }
 
     .chip.round.capped img {
@@ -1681,13 +1682,330 @@
         mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)
       }
     }
+    
+    /* =====================================================
+       v2 MOTION — dark-grey intro, live gradient, card deck
+       ===================================================== */
+    
+    body::before { background: none }
+
+    /* page-wide colour fields: invisible at first, bloom in, then keep drifting */
+    .aurora { opacity: 0; transform: scale(1.12); animation: auraIn 2.8s var(--ease) .7s forwards }
+    @keyframes auraIn { to { opacity: 1; transform: none } }
+    .aurora span { filter: blur(100px); opacity: .42 }
+    .aurora .a1 { animation-duration: 16s }
+    .aurora .a2 { animation-duration: 19s; opacity: .30 }
+    .aurora .a3 { animation-duration: 23s; opacity: .26 }
+    .aurora .a4 {
+      width: 38vw; height: 38vw; left: 20%; top: 8%;
+      background: radial-gradient(circle at 50% 50%, #FF5C8A, rgba(255, 92, 138, 0) 70%);
+      opacity: .20; animation: drift2 21s ease-in-out infinite alternate-reverse
+    }
+
+    /* film grain so the gradient reads as material, not a flat render */
+    .grain {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    @keyframes grain {
+      0% { transform: translate(0, 0) } 20% { transform: translate(-3%, 2%) } 40% { transform: translate(2%, -3%) }
+      60% { transform: translate(-2%, -1%) } 80% { transform: translate(3%, 3%) } 100% { transform: translate(0, 0) }
+    }
+
+    /* hero: starts as flat dark grey, then a slow rotating gradient rises behind the name */
+    .hero { isolation: isolate }
+    .hero::before {
+      content: ""; position: absolute; z-index: -1; left: 50%; top: 50%;
+      width: min(1100px, 140vw); aspect-ratio: 1;
+      translate: -50% -58%;
+      background: conic-gradient(from 0deg, #3A78A8, #1F5A66 22%, #2C4A86 45%, #3D86B0 62%, #1E4E5C 80%, #3A78A8);
+      -webkit-mask: radial-gradient(closest-side, #000 20%, rgba(0,0,0,.45) 55%, transparent 100%);
+      mask: radial-gradient(closest-side, #000 20%, rgba(0,0,0,.45) 55%, transparent 100%);
+      filter: blur(70px);
+      opacity: 0; scale: .7;
+      animation: heroGlow 2.6s var(--ease) .5s forwards, spinGlow 24s linear infinite;
+      pointer-events: none
+    }
+    @keyframes heroGlow { to { opacity: .62; scale: 1 } }
+    @keyframes spinGlow { to { rotate: 360deg } }
+
+    /* hero content enters in sequence after the gradient starts */
+    .hero .rv { opacity: 1; transform: none; transition: none }
+    @keyframes riseIn { from { opacity: 0; transform: translateY(26px); filter: blur(10px) } to { opacity: 1; transform: none; filter: blur(0) } }
+    @keyframes lineUp { from { transform: translateY(108%) } to { transform: none } }
+    .hero .hey { animation: riseIn 1s var(--ease) .95s both }
+    .name .ln { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em }
+    .name .ln > span { display: inline-block; animation: lineUp 1.1s var(--ease) both }
+    .name .ln:nth-child(1) > span { animation-delay: 1.05s }
+    .name .ln:nth-child(2) > span { animation-delay: 1.17s }
+    .name { font-weight: 600; letter-spacing: -.045em }
+    .hero .avatar-wrap { animation: riseIn 1.1s var(--ease) 1.3s both }
+    .hero .rolerow { animation: riseIn 1s var(--ease) 1.45s both }
+    .hero .badges { animation: riseIn 1s var(--ease) 1.65s both }
+    .hero .brands { animation: riseIn 1s var(--ease) 1.85s both }
+    .hey, .rolerow .rolet { letter-spacing: -.01em }
+
+    /* section titles: each line lifts out of a blur */
+    .stitle.rv { opacity: 1; transform: none }
+    .stitle .t1, .stitle .t2 {
+      display: inline-block; opacity: 0; transform: translateY(38px); filter: blur(8px);
+      transition: opacity .9s var(--ease), transform 1s var(--ease), filter .9s var(--ease)
+    }
+    .stitle .t2 { transition-delay: .12s }
+    .stitle.in .t1, .stitle.in .t2 { opacity: 1; transform: none; filter: blur(0) }
+    .stitle .t2 { padding-bottom: .08em }
+
+    /* project cards: a deck — each card enters, then shrinks back as the next one slides over it */
+    .slot { top: calc(110px + var(--i, 0) * 14px); transform-origin: 50% 0 }
+    @media(max-width:640px) { .slot { top: calc(86px + var(--i, 0) * 10px) } }
+    .pcard {
+      position: relative;
+      transition: transform .6s var(--ease)
+    }
+    .pcard::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit; background: #0E0E10;
+      opacity: var(--cover, 0); pointer-events: none; z-index: 6
+    }
+    @media(hover: hover) and (pointer: fine) {
+      .pcard:hover { transform: translateY(-6px) }
+    }
+    .hero.off::before { animation-play-state: paused }
+
+    @media(prefers-reduced-motion:reduce) {
+      .aurora, .hero::before { animation: none !important; opacity: 1 }
+      .hero::before { opacity: .35; scale: 1 }
+      .grain { animation: none !important }
+      .hero .hey, .hero .avatar-wrap, .hero .rolerow, .hero .badges, .hero .brands, .name .ln > span { animation: none !important }
+      .stitle .t1, .stitle .t2 { opacity: 1; transform: none; filter: none }
+    }
+  
+    /* =====================================================
+       v3 — Navjot-style: Varela Round + Kurale, blue-teal mood,
+       3D icons, glass badges
+       ===================================================== */
+    :root { --bg: #15181D }
+    body { background: #15181D }
+    .aurora .a1 { background: radial-gradient(circle at 40% 40%, #3B82B8, rgba(59, 130, 184, 0) 70%); opacity: .45 }
+    .aurora .a2 { background: radial-gradient(circle at 50% 50%, #2F5F9E, rgba(47, 95, 158, 0) 70%); opacity: .40 }
+    .aurora .a3 { background: radial-gradient(circle at 50% 50%, #1F6A6E, rgba(31, 106, 110, 0) 70%); opacity: .38 }
+    .aurora .a4 { background: radial-gradient(circle at 50% 50%, #4A3F8C, rgba(74, 63, 140, 0) 70%); opacity: .22 }
+
+    /* type */
+    .name { font-family: var(--display); font-weight: 400; letter-spacing: -.01em; line-height: 1.02 }
+    .hey, .rolerow .rolet { font-family: var(--accent-font); letter-spacing: -.01em }
+    .stitle { font-family: var(--accent-font); font-weight: 400; letter-spacing: -.01em }
+    .stitle .t1, .stitle .t2 { font-weight: 400; color: #F1F3F7; background: none; -webkit-text-fill-color: currentColor }
+    .stitle .t1 { color: #F1F3F7 }
+    @media(min-width:700px) { .stitle .mbr { display: none } }
+    .ghost { font-family: var(--display); font-weight: 400; letter-spacing: -.01em;
+      background:
+        linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .5) 50%, transparent 70%) 0 0 / 250% 100%,
+        linear-gradient(180deg, rgba(170, 205, 235, .42) 0%, rgba(59, 130, 184, .16) 55%, rgba(59, 130, 184, 0) 92%);
+      -webkit-background-clip: text; background-clip: text }
+    .rolerow .rule { background: linear-gradient(90deg, #2F7BFF, rgba(255, 255, 255, .45)) }
+    .nav { background: rgba(40, 46, 56, .5) }
+    .nav a.active { background: rgba(255, 255, 255, .12) }
+
+    /* badges: frosted glass stadiums, white when open, 3D icons breaking out */
+    .badge { height: clamp(56px, 7.4vw, 80px); min-width: clamp(64px, 10vw, 112px);
+      background: rgba(255, 255, 255, .10); border: 1.5px solid rgba(255, 255, 255, .22);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px) }
+    .badge .ic { width: clamp(46px, 6.6vw, 70px); height: clamp(46px, 6.6vw, 70px); filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .45)) }
+    .badge .ic img { width: 100%; height: 100%; object-fit: contain; display: block }
+    .badge .lb { font-family: var(--body); font-weight: 500; font-size: clamp(13px, 1.7vw, 19px) }
+    .badge.open, .badge.open.t-coral, .badge.open.t-blue, .badge.open.t-violet, .badge.open.t-mint {
+      background: #fff; border-color: #fff; color: #15181D; box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .7) }
+    .badge.open { padding: 0 clamp(20px, 3vw, 36px) 0 8px }
+    .badge.open .ic { transform: scale(1.18) translateY(-6px) }
+    @media(max-width:600px) {
+      .badge { height: 50px; min-width: 54px }
+      .badge .ic { width: 40px; height: 40px }
+      .badge.open { padding: 0 14px 0 4px }
+      .badge.open .ic { transform: scale(1.12) translateY(-4px); margin-left: -8px; margin-right: 6px }
+      .badge .lb { font-size: 12.5px }
+    }
+
+
+    .efront { background: radial-gradient(120% 80% at 100% 0%, rgba(90, 150, 210, .14), transparent 60%), linear-gradient(165deg, rgba(38, 42, 50, .92), rgba(22, 24, 29, .95)) }
+    .tubshell { background: linear-gradient(165deg, rgba(34, 38, 46, .9), rgba(20, 22, 27, .92)) }
+    .tubcol h3, .foot h2 { font-family: var(--accent-font); font-weight: 400 }
+    /* 3D floating app icons */
+    .float { border: 0; animation: bob 7s ease-in-out infinite }
+    .float::after { display: none }
+    .img3d { width: 96px; height: auto; filter: drop-shadow(0 14px 18px rgba(0, 0, 0, .5)) }
+    .img3d.spark { width: 54px; filter: none; opacity: .9 }
+    .t3d { width: 78px; height: 78px; border-radius: 22px; display: grid; place-items: center; overflow: visible }
+    .t3d b { font-family: "Varela Round", system-ui, sans-serif; font-weight: 400; font-size: 36px; line-height: 1; letter-spacing: -.02em }
+    .f-ps { background: linear-gradient(150deg, #5AA2FF 0%, #2F7BF5 45%, #1857D6 100%);
+      box-shadow: inset 0 2px 1px rgba(255, 255, 255, .55), inset 0 -5px 8px rgba(0, 0, 0, .22), 0 7px 0 #123E9C, 0 22px 30px -8px rgba(0, 0, 0, .65) }
+    .f-ps b { color: #fff; text-shadow: 0 1px 0 #DCE6FF, 0 2px 0 #BCCDF7, 0 3px 0 #9DB3EE, 0 4px 0 #7F98E2, 0 8px 10px rgba(0, 0, 0, .35) }
+    .f-ai { background: linear-gradient(150deg, #8A4B36 0%, #5E2F20 55%, #43200F 100%);
+      box-shadow: inset 0 2px 1px rgba(255, 255, 255, .35), inset 0 -5px 8px rgba(0, 0, 0, .3), 0 7px 0 #2B1309, 0 22px 30px -8px rgba(0, 0, 0, .65) }
+    .f-ai b { color: #FFB22E; text-shadow: 0 1px 0 #F09A12, 0 2px 0 #D9850A, 0 3px 0 #BD6F06, 0 4px 0 #9C5904, 0 8px 10px rgba(0, 0, 0, .4) }
+    .f-figma { background: linear-gradient(150deg, #3A3A3E 0%, #1E1E21 55%, #101012 100%); position: absolute;
+      box-shadow: inset 0 2px 1px rgba(255, 255, 255, .3), inset 0 -5px 8px rgba(0, 0, 0, .4), 0 7px 0 #050506, 0 22px 30px -8px rgba(0, 0, 0, .7) }
+    .f-figma i { position: absolute; width: 17px; height: 17px; box-shadow: inset -2px -3px 4px rgba(0, 0, 0, .25), inset 2px 2px 3px rgba(255, 255, 255, .45) }
+    .f-figma .fg-r { left: 22px; top: 13px; border-radius: 9px 0 0 9px; background: #F24E1E }
+    .f-figma .fg-o { left: 39px; top: 13px; border-radius: 0 9px 9px 0; background: #FF7262 }
+    .f-figma .fg-p { left: 22px; top: 30px; border-radius: 9px 0 0 9px; background: #A259FF }
+    .f-figma .fg-b { left: 39px; top: 30px; border-radius: 50%; background: #1ABCFE }
+    .f-figma .fg-g { left: 22px; top: 47px; border-radius: 9px 0 9px 9px; background: #0ACF83 }
+  
+    /* =====================================================
+       v4 — page-wide moving mesh gradient (Navjot style)
+       colours sampled from the reference: steel blue, teal, navy, indigo
+       ===================================================== */
+    :root { --bg: #11131C }
+    body { background: #11131C }
+    .aurora, .hero::before { display: none !important }
+    .mesh { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+      opacity: 0; animation: meshIn 2.6s var(--ease) .5s forwards }
+    @keyframes meshIn { to { opacity: 1 } }
+    .mesh span { position: absolute; width: 85vmax; height: 85vmax; border-radius: 50%; will-change: transform }
+    .mesh .m1 { left: -25vmax; top: -30vmax; background: radial-gradient(circle, rgba(45, 84, 115, .95) 0%, rgba(45, 84, 115, 0) 62%); animation: mv1 22s ease-in-out infinite alternate }
+    .mesh .m2 { right: -30vmax; top: -15vmax; background: radial-gradient(circle, rgba(50, 90, 120, .9) 0%, rgba(50, 90, 120, 0) 62%); animation: mv2 26s ease-in-out infinite alternate }
+    .mesh .m3 { left: 5vmax; bottom: -40vmax; background: radial-gradient(circle, rgba(30, 74, 88, .95) 0%, rgba(30, 74, 88, 0) 62%); animation: mv3 24s ease-in-out infinite alternate }
+    .mesh .m4 { right: -20vmax; bottom: -35vmax; background: radial-gradient(circle, rgba(52, 46, 92, .85) 0%, rgba(52, 46, 92, 0) 62%); animation: mv4 30s ease-in-out infinite alternate }
+    .mesh .m5 { left: 20vmax; top: 10vmax; width: 60vmax; height: 60vmax; background: radial-gradient(circle, rgba(38, 56, 90, .55) 0%, rgba(38, 56, 90, 0) 62%); animation: mv5 19s ease-in-out infinite alternate }
+    @keyframes mv1 { 0% { transform: translate(0, 0) scale(1) } 50% { transform: translate(30vw, 20vh) scale(1.15) } 100% { transform: translate(10vw, 45vh) scale(.95) } }
+    @keyframes mv2 { 0% { transform: translate(0, 0) scale(1) } 50% { transform: translate(-35vw, 25vh) scale(.9) } 100% { transform: translate(-15vw, 50vh) scale(1.1) } }
+    @keyframes mv3 { 0% { transform: translate(0, 0) scale(1.1) } 50% { transform: translate(35vw, -30vh) scale(.95) } 100% { transform: translate(-10vw, -45vh) scale(1.05) } }
+    @keyframes mv4 { 0% { transform: translate(0, 0) scale(1) } 50% { transform: translate(-30vw, -25vh) scale(1.2) } 100% { transform: translate(-50vw, 5vh) scale(.9) } }
+    @keyframes mv5 { 0% { transform: translate(0, 0) scale(1) } 50% { transform: translate(-25vw, 25vh) scale(1.25) } 100% { transform: translate(25vw, 10vh) scale(.85) } }
+    /* dark edges, like the reference */
+    .mesh::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 95% at 50% 50%, transparent 45%, rgba(14, 15, 24, .85) 100%) }
+    .grain { opacity: .05 }
+    @media(prefers-reduced-motion:reduce) { .mesh, .mesh span { animation: none !important; opacity: 1 } }
+  
+    /* v5 — livelier gradient: brighter fields, faster drift, wider travel */
+    .mesh .m1 { background: radial-gradient(circle, rgba(58, 110, 150, .95) 0%, rgba(58, 110, 150, 0) 60%); animation: mv1 11s ease-in-out infinite alternate }
+    .mesh .m2 { background: radial-gradient(circle, rgba(62, 112, 148, .9) 0%, rgba(62, 112, 148, 0) 60%); animation: mv2 13s ease-in-out infinite alternate }
+    .mesh .m3 { background: radial-gradient(circle, rgba(32, 92, 104, .95) 0%, rgba(32, 92, 104, 0) 60%); animation: mv3 12s ease-in-out infinite alternate }
+    .mesh .m4 { background: radial-gradient(circle, rgba(70, 58, 128, .85) 0%, rgba(70, 58, 128, 0) 60%); animation: mv4 15s ease-in-out infinite alternate }
+    .mesh .m5 { background: radial-gradient(circle, rgba(44, 70, 118, .7) 0%, rgba(44, 70, 118, 0) 60%); animation: mv5 9s ease-in-out infinite alternate }
+    .mesh::after { background: radial-gradient(130% 100% at 50% 50%, transparent 50%, rgba(14, 15, 24, .75) 100%) }
+    /* open badge turns blue, like the reference */
+    .badge.open, .badge.open.t-coral, .badge.open.t-blue, .badge.open.t-violet, .badge.open.t-mint {
+      background: #2B63E0; border-color: #2B63E0; color: #fff; box-shadow: 0 18px 40px -16px rgba(43, 99, 224, .7) }
+    .badge { background: rgba(255, 255, 255, .12); border-color: rgba(255, 255, 255, .28) }
+  
+    /* v6 — darker palette sampled from the reference: near-black base,
+       muted slate-blue / slate-teal glows, deep purple pool low-centre */
+    :root { --bg: #0E0E18 }
+    body { background: #0E0E18 }
+    .mesh .m1 { background: radial-gradient(circle, rgba(46, 62, 82, .95) 0%, rgba(46, 62, 82, 0) 60%) }
+    .mesh .m2 { background: radial-gradient(circle, rgba(42, 58, 70, .95) 0%, rgba(42, 58, 70, 0) 60%) }
+    .mesh .m3 { background: radial-gradient(circle, rgba(36, 50, 62, .9) 0%, rgba(36, 50, 62, 0) 60%) }
+    .mesh .m4 { background: radial-gradient(circle, rgba(58, 41, 100, .8) 0%, rgba(58, 41, 100, 0) 60%) }
+    .mesh .m5 { background: radial-gradient(circle, rgba(48, 40, 88, .6) 0%, rgba(48, 40, 88, 0) 60%) }
+    .mesh::after { background: radial-gradient(120% 95% at 50% 50%, transparent 40%, rgba(13, 13, 22, .9) 100%) }
+  
+    /* =====================================================
+       v7 — LIGHT THEME: warm paper base, soft drifting colour fields
+       (blue / peach / sage, no purple), dark ink type
+       ===================================================== */
+    :root { --bg: #F4F2ED; --ink: #17171B; --muted: #5E5E68; --dim: #8A8A93; --line: rgba(23, 23, 27, .10) }
+    body { background: #F4F2ED; color: var(--ink) }
+    ::selection { background: #2B63E0; color: #fff }
+
+    .mesh .m1 { background: radial-gradient(circle, rgba(178, 205, 235, .85) 0%, rgba(178, 205, 235, 0) 60%) }
+    .mesh .m2 { background: radial-gradient(circle, rgba(244, 212, 186, .8) 0%, rgba(244, 212, 186, 0) 60%) }
+    .mesh .m3 { background: radial-gradient(circle, rgba(196, 222, 205, .8) 0%, rgba(196, 222, 205, 0) 60%) }
+    .mesh .m4 { background: radial-gradient(circle, rgba(190, 210, 236, .7) 0%, rgba(190, 210, 236, 0) 60%) }
+    .mesh .m5 { background: radial-gradient(circle, rgba(247, 225, 200, .65) 0%, rgba(247, 225, 200, 0) 60%) }
+    .mesh::after { display: none }
+    .grain { opacity: .035 }
+
+    /* nav */
+    .nav { background: rgba(255, 255, 255, .72); border: 1px solid rgba(23, 23, 27, .07); box-shadow: 0 14px 40px -18px rgba(30, 30, 40, .28) }
+    .nav a { color: #2A2A31 }
+    .nav a:hover { color: #000; background: rgba(23, 23, 27, .06) }
+    .nav a.active { color: #000; background: rgba(23, 23, 27, .08) }
+
+    /* hero */
+    .hey, .rolerow .rolet { color: #6A6A73 }
+    .name { color: var(--ink) }
+    .rolerow .rule { background: linear-gradient(90deg, #2B63E0, rgba(23, 23, 27, .18)) }
+    .avatar { border-color: rgba(23, 23, 27, .08); box-shadow: 0 24px 50px -26px rgba(30, 30, 40, .55) }
+    .linkedin-badge { border-color: #F4F2ED; box-shadow: 0 4px 12px rgba(0, 0, 0, .18) }
+    .badge { background: rgba(255, 255, 255, .78); border: 1px solid rgba(23, 23, 27, .08); color: var(--ink);
+      box-shadow: 0 10px 24px -16px rgba(30, 30, 40, .35) }
+    .badge .ic { filter: drop-shadow(0 6px 8px rgba(30, 30, 40, .22)) }
+    .brands p { color: var(--dim) }
+    .brandset span { color: #8A8A93 }
+    .brandset span:hover { color: var(--ink) }
+
+    /* section titles */
+    .stitle .t1, .stitle .t2 { color: var(--ink) }
+
+    /* project cards */
+    .pcard { border: 1px solid rgba(23, 23, 27, .07); box-shadow: 0 26px 60px -34px rgba(30, 30, 40, .45) }
+    .pcard::after { background: #F4F2ED }
+
+    /* experience */
+    .ghost { background:
+        linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .7) 50%, transparent 70%) 0 0 / 250% 100%,
+        linear-gradient(180deg, rgba(23, 23, 27, .28) 0%, rgba(23, 23, 27, .10) 55%, rgba(23, 23, 27, 0) 95%);
+      -webkit-background-clip: text; background-clip: text }
+    .efront { background: #fff; border: 1px solid rgba(23, 23, 27, .08); box-shadow: 0 22px 48px -32px rgba(30, 30, 40, .45) }
+    .efront h4 { color: var(--ink) }
+    .xdate { color: #4A4A53; background: rgba(23, 23, 27, .04) }
+    .xicon { background: rgba(43, 99, 224, .10); border-color: rgba(43, 99, 224, .18); color: #2B63E0 }
+    .xicon.i2 { background: rgba(14, 124, 140, .10); border-color: rgba(14, 124, 140, .2); color: #0E7C8C }
+    .xicon.i3 { background: rgba(18, 147, 106, .10); border-color: rgba(18, 147, 106, .2); color: #12936A }
+    .eback { background: #17171B; color: #fff; box-shadow: 0 26px 56px -30px rgba(20, 20, 30, .6) }
+    .ehead { border-left-color: #2B63E0 }
+    .ehead h4 { color: #fff }
+    .ehead p { color: #B5B5BE }
+    .edesc { color: #DADAE0 }
+    .resume a { color: #2A2A31; border-bottom-color: rgba(23, 23, 27, .3) }
+    .resume a:hover { color: #000; border-color: #000 }
+
+    /* skills / tools */
+    .tubshell { background: rgba(255, 255, 255, .8); border: 1px solid rgba(23, 23, 27, .08); box-shadow: 0 26px 60px -40px rgba(30, 30, 40, .4) }
+    .tubcol h3 { color: var(--ink) }
+    .chip.round { box-shadow: 0 0 0 1px rgba(23, 23, 27, .08), 0 6px 14px -8px rgba(30, 30, 40, .35) }
+    .chip { box-shadow: 0 6px 14px -10px rgba(30, 30, 40, .4) }
+
+    /* gallery */
+    .rc { border-color: rgba(23, 23, 27, .06) }
+
+    /* footer */
+    .foot::before { background: rgba(23, 23, 27, .1) }
+    .foot h2 { color: var(--ink) }
+    .getin { background: #fff; border: 1px solid rgba(23, 23, 27, .1); color: var(--ink) }
+    .getin:hover { background: #2B63E0; border-color: #2B63E0; color: #fff }
+    .resume-btn { color: #4A4A53; border-color: rgba(23, 23, 27, .14) }
+    .resume-btn:hover { color: var(--ink); background: #fff; border-color: #2B63E0 }
+
+    /* floats: lighter shadows on paper */
+    .t3d { filter: none }
+    .img3d { filter: drop-shadow(0 12px 14px rgba(30, 30, 40, .25)) }
+  
+    /* v8 — compact badges with line icons in the site's blue */
+    .badge { height: clamp(48px, 5.6vw, 58px); min-width: clamp(48px, 5.6vw, 58px); padding: 0 6px }
+    .badge .ic { width: clamp(36px, 4.2vw, 44px); height: clamp(36px, 4.2vw, 44px); border-radius: 50%;
+      background: rgba(43, 99, 224, .10); color: #2B63E0; filter: none; font-size: 0 }
+    .badge .ic svg { width: 45%; height: 45% }
+    .badge .lb { font-size: clamp(13px, 1.4vw, 15.5px) }
+    .badge.open { padding: 0 clamp(18px, 2.2vw, 24px) 0 6px }
+    .badge.open .ic { transform: none; margin: 0 10px 0 0; background: #fff; color: #2B63E0 }
+    @media(max-width:600px) {
+      .badge { height: 44px; min-width: 44px; padding: 0 4px }
+      .badge .ic { width: 34px; height: 34px }
+      .badge.open { padding: 0 14px 0 4px }
+      .badge.open .ic { transform: none; margin: 0 8px 0 0 }
+    }
+    .f-pen { background: linear-gradient(150deg, #FFFFFF 0%, #EEF2FA 60%, #DCE4F3 100%); color: #2B63E0;
+      box-shadow: inset 0 2px 1px #fff, inset 0 -5px 8px rgba(43, 99, 224, .12), 0 7px 0 #C4D0E8, 0 22px 30px -8px rgba(30, 30, 40, .35) }
   </style>
 </head>
 
 <body>
 
   <!-- animated background -->
-  <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+  <div class="mesh" aria-hidden="true"><span class="m1"></span><span class="m2"></span><span class="m3"></span><span class="m4"></span><span class="m5"></span></div>
+  <div class="grain" aria-hidden="true"></div>
 
   <!-- NAV -->
   <nav class="nav">
@@ -1721,7 +2039,7 @@
     <div class="hero-inner rv">
       <p class="hey">Hey there, I am</p>
       <div class="namerow">
-        <h1 class="name">Prachi<br>Yadav</h1>
+        <h1 class="name"><span class="ln"><span>Prachi</span></span><span class="ln"><span>Yadav</span></span></h1>
         <div class="avatar-wrap">
           <a href="https://www.linkedin.com/in/prachi-yadav-212212313" target="_blank" rel="noopener noreferrer"
             class="avatar" aria-label="Prachi Yadav — LinkedIn Profile">
@@ -1743,12 +2061,12 @@
     </div>
 
     <div class="badges rv" id="badges">
-      <button class="badge t-coral"><span class="ic">🗺️</span><span class="lbwrap"><span class="lb">Bengaluru, India</span></span></button>
-      <button class="badge t-blue"><span class="ic">💻</span><span class="lbwrap"><span class="lb">CSE Undergrad ·
+      <button class="badge t-coral"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span><span class="lbwrap"><span class="lb">Bengaluru, India</span></span></button>
+      <button class="badge t-blue"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span><span class="lbwrap"><span class="lb">CSE Undergrad ·
             VTU</span></span></button>
-      <button class="badge t-violet"><span class="ic">🖥️</span><span class="lbwrap"><span class="lb">Product
+      <button class="badge t-violet"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 13-.654-4.736a4 4 0 0 0-2.756-3.266l-9.163-2.9a2 2 0 0 0-2.017.493l-.82.819a2 2 0 0 0-.492 2.017l2.9 9.163a4 4 0 0 0 3.266 2.756L13 18"/><path d="M18.648 12.352a1.205 1.205 0 0 1 1.704 0l1.296 1.296a1.205 1.205 0 0 1 0 1.704l-6.296 6.296a1.205 1.205 0 0 1-1.704 0l-1.296-1.296a1.205 1.205 0 0 1 0-1.704z"/><path d="m3 3 6.586 6.586"/><circle cx="11" cy="11" r="2"/></svg></span><span class="lbwrap"><span class="lb">Product
             Designer</span></span></button>
-      <button class="badge t-mint"><span class="ic">🏆</span><span class="lbwrap"><span class="lb">UI/UX
+      <button class="badge t-mint"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="7" x="3" y="3" rx="1"/><rect width="9" height="7" x="3" y="14" rx="1"/><rect width="5" height="7" x="16" y="14" rx="1"/></svg></span><span class="lbwrap"><span class="lb">UI/UX
             Designer</span></span></button>
     </div>
 
@@ -1769,7 +2087,7 @@
 
   <!-- WORK -->
   <section id="work" class="wrap">
-    <h2 class="stitle rv"><span class="t1">Showcase of</span><br><span class="t2">My Design Solutions</span></h2>
+    <h2 class="stitle rv"><span class="t1">Showcase of</span><br class="mbr"> <span class="t2">My Design Solutions</span></h2>
     <div class="stack">
 
       <!-- EDNEURON COVER: replace assets/edneuron/edneuron-cover.webp to change the card image -->
@@ -1865,8 +2183,8 @@
   <!-- EXPERIENCE -->
   <section id="exp" class="wrap">
     <div class="ghost" aria-hidden="true">EXPERIENCE</div>
-    <div class="float f-fg" style="top:60px;left:-70px;animation-delay:-1s">Fg</div>
-    <div class="float f-fr" style="top:340px;right:-70px;animation-delay:-3.5s">Fr</div>
+    <div class="float t3d f-figma" style="top:60px;left:-80px;animation-delay:-1s" aria-hidden="true"><i class="fg-r"></i><i class="fg-o"></i><i class="fg-p"></i><i class="fg-b"></i><i class="fg-g"></i></div>
+    <div class="float t3d f-pen" style="top:330px;right:-80px;animation-delay:-3.5s" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m18 13-.654-4.736a4 4 0 0 0-2.756-3.266l-9.163-2.9a2 2 0 0 0-2.017.493l-.82.819a2 2 0 0 0-.492 2.017l2.9 9.163a4 4 0 0 0 3.266 2.756L13 18"/><path d="M18.648 12.352a1.205 1.205 0 0 1 1.704 0l1.296 1.296a1.205 1.205 0 0 1 0 1.704l-6.296 6.296a1.205 1.205 0 0 1-1.704 0l-1.296-1.296a1.205 1.205 0 0 1 0-1.704z"/><path d="m3 3 6.586 6.586"/><circle cx="11" cy="11" r="2"/></svg></div>
 
     <div class="expgrid">
 
@@ -1978,9 +2296,9 @@
 
   <!-- GALLERY -->
   <section id="gallery" class="wrap">
-    <div class="float f-ps" style="top:150px;left:-72px;animation-delay:-2s">Ps</div>
-    <div class="float f-ai" style="top:230px;right:-72px;animation-delay:-4.5s">Ai</div>
-    <h2 class="stitle rv"><span class="t1">Few of my</span><br><span class="t2">Graphic Designs</span></h2>
+    <div class="float t3d f-ps" style="top:120px;left:-80px;animation-delay:-2s" aria-hidden="true"><b>Ps</b></div>
+    <div class="float t3d f-ai" style="top:150px;right:-80px;animation-delay:-4.5s" aria-hidden="true"><b>Ai</b></div>
+    <h2 class="stitle rv"><span class="t1">Few of my</span><br class="mbr"> <span class="t2">Graphic Designs</span></h2>
   </section>
 
   <div class="ring-bleed">
@@ -2006,13 +2324,6 @@
     </div>
   </div>
 
-  <section class="wrap" style="text-align:center;padding-top:34px">
-    <a class="viewmore rv" href="#">View More
-      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2">
-        <path d="M3 11 11 3M11 3H5M11 3v6" />
-      </svg>
-    </a>
-  </section>
 
   <!-- FOOTER -->
   <footer class="foot wrap">
@@ -2346,6 +2657,41 @@
         });
       }, { rootMargin: '-45% 0px -50% 0px' });
       Object.keys(links).forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
+    })();
+
+    /* ======= v2: project deck — entrance, stack-shrink, tilt ======= */
+    (function () {
+      const slots = [...document.querySelectorAll('.stack .slot')];
+      if (!slots.length) return;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      slots.forEach((s, i) => s.style.setProperty('--i', i));
+      if (reduced) { slots.forEach(s => s.classList.add('shown')); return; }
+
+      const seen = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('shown'); seen.unobserve(e.target); }
+      }), { threshold: .15 });
+      slots.forEach(s => seen.observe(s));
+
+      let ticking = false;
+      function update() {
+        ticking = false;
+        for (let i = 0; i < slots.length - 1; i++) {
+          const s = slots[i], n = slots[i + 1];
+          const top = parseFloat(getComputedStyle(s).top) || 0;
+          const h = s.offsetHeight;
+          const p = Math.min(1, Math.max(0, (top + h - n.getBoundingClientRect().top) / h));
+          s.style.scale = (1 - p * 0.08).toFixed(4);
+          s.style.setProperty('--cover', (p * 0.5).toFixed(3));
+        }
+      }
+      const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+      window.addEventListener('scroll', req, { passive: true });
+      window.addEventListener('resize', req);
+      update();
+
+      // pause the hero gradient once it is off screen, so it costs nothing while you read the cards
+      const hero = document.querySelector('.hero');
+      if (hero) new IntersectionObserver(es => hero.classList.toggle('off', !es[0].isIntersecting)).observe(hero);
     })();
   </script>
 </body>
